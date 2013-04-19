@@ -59,10 +59,11 @@ create table menu(
 );
 
 -- clong 110, user1 user1, admin admin
-insert into users(id, username, password, email) values (1, 'clong','$shiro1$SHA-256$500000$gYP8/KguX0+ufjYHw0Y83A==$Kg/HdrlYiwSZ7LPs/rq6jikgan9W7bzOFycwDFr4klE=', 'clong@test.com');
-insert into users(id, username, password, email) values (2, 'user1','$shiro1$SHA-256$500000$Cz8CvbpUrpgkk+k8puy3iA==$VRXptpQeeCwzYDTq+ZEr8rrTFFUIIan/Xk5jwHXFRYg=', 'user1@test.com');
-insert into users(id, username, password, email) values (3, 'admin','$shiro1$SHA-256$500000$DWirWtjc+NmEBW83qYr2gQ==$917j5L+RHCd6IKJ24nrSxaGXdelol8lVrzVlJrLsl3w=', 'admin@test.com');
-insert into users(id, username, password, email) values (4, 'user2','$shiro1$SHA-256$500000$l48hH1mNJTZC35z6YPyj0w==$FyrwtiltMAdv7bwghfmGzqReJFliYcocbgiZkSaavMU=', 'user2@test.com');
+insert into users(id, username, password, email) values (1, 'user1','$shiro1$SHA-256$500000$Cz8CvbpUrpgkk+k8puy3iA==$VRXptpQeeCwzYDTq+ZEr8rrTFFUIIan/Xk5jwHXFRYg=', 'user1@test.com');
+insert into users(id, username, password, email) values (2, 'admin','$shiro1$SHA-256$500000$DWirWtjc+NmEBW83qYr2gQ==$917j5L+RHCd6IKJ24nrSxaGXdelol8lVrzVlJrLsl3w=', 'admin@test.com');
+insert into users(id, username, password, email) values (3, 'user2','$shiro1$SHA-256$500000$l48hH1mNJTZC35z6YPyj0w==$FyrwtiltMAdv7bwghfmGzqReJFliYcocbgiZkSaavMU=', 'user2@test.com');
+insert into users(id, username, password, email) values (4, 'clong','$shiro1$SHA-256$500000$gYP8/KguX0+ufjYHw0Y83A==$Kg/HdrlYiwSZ7LPs/rq6jikgan9W7bzOFycwDFr4klE=', 'clong@test.com');
+
 
 
 
