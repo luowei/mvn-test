@@ -13,6 +13,7 @@ import java.util.Set;
  * To change this template use File | Settings | File Templates.
  */
 @Entity
+@Table(name = "role")
 public class Role {
     private Integer id;
 

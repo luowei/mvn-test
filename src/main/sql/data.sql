@@ -53,7 +53,7 @@ create table menu(
   id int(11) primary key auto_increment,
   name varchar(50) not null,
   url varchar(200) default null,
-  create_time timestamp not null,
+  create_time DATETIME not null,
   sequence varchar(50),
   parent_id int(11)
 );
@@ -111,20 +111,20 @@ insert into user_role (user_id, role_id) values (4, 3);
 
 
 
-insert into menu(name, url, create_time, sequence, parent_id) values ('用户管理', '', '2012-03-04', '1', 0);
-insert into menu(name, url, create_time, sequence, parent_id) values ('人员管理', 'manage/user/list', '2012-03-04', '1.1', 1);
-insert into menu(name, url, create_time, sequence, parent_id) values ('角色管理', 'manage/role/list', '2012-03-04', '1.2', 1);
-insert into menu(name, url, create_time, sequence, parent_id) values ('权限管理', 'manage/permissions/list', '2012-03-04', '1.4', 1);
-insert into menu(name, url, create_time, sequence, parent_id) values ('菜单管理', 'manage/menu/list', '2012-03-04', '1.5', 1);
+insert into menu(name, url, create_time, sequence, parent_id) values ('用户管理', '', '2012-03-04 14:25:30', '1', 0);
+insert into menu(name, url, create_time, sequence, parent_id) values ('人员管理', 'manage/user/list', '2012-03-04 18:25:30', '1.1', 1);
+insert into menu(name, url, create_time, sequence, parent_id) values ('角色管理', 'manage/role/list', '2012-03-04 20:25:30', '1.2', 1);
+insert into menu(name, url, create_time, sequence, parent_id) values ('权限管理', 'manage/permissions/list', '2012-03-04 08:25:30', '1.4', 1);
+insert into menu(name, url, create_time, sequence, parent_id) values ('菜单管理', 'manage/menu/list', '2012-03-04 10:25:30', '1.5', 1);
 
 
-insert into menu(name, url, create_time, sequence, parent_id) values ('综合管理', '', '2012-03-05', '2', 0);
-insert into menu(name, url, create_time, sequence, parent_id) values ('test1', 'hello.jsp', '2012-03-05', '2.1', 6);
+insert into menu(name, url, create_time, sequence, parent_id) values ('综合管理', '', '2012-03-05 18:18:18', '2', 0);
+insert into menu(name, url, create_time, sequence, parent_id) values ('test1', 'hello.jsp', '2012-03-05 18:18:18', '2.1', 6);
 
-insert into menu(name, url, create_time, sequence, parent_id) values ('aa管理', '', '2012-03-05', '3', 0);
-insert into menu(name, url, create_time, sequence, parent_id) values ('bb管理', '', '2012-03-05', '4', 0);
-insert into menu(name, url, create_time, sequence, parent_id) values ('cc管理', '', '2012-03-05', '5', 0);
-insert into menu(name, url, create_time, sequence, parent_id) values ('dd管理', '', '2012-03-05', '6', 0);
-insert into menu(name, url, create_time, sequence, parent_id) values ('ee管理', '', '2012-03-05', '7', 0);
-insert into menu(name, url, create_time, sequence, parent_id) values ('杂项', '', '2012-03-05', '8', 0);
-insert into menu(name, url, create_time, sequence, parent_id) values ('生成密码', 'pwdGen', '2012-03-05', '8.1', 13);
+insert into menu(name, url, create_time, sequence, parent_id) values ('aa管理', '', '2012-03-05 18:18:18', '3', 0);
+insert into menu(name, url, create_time, sequence, parent_id) values ('bb管理', '', '2012-03-05 18:18:18', '4', 0);
+insert into menu(name, url, create_time, sequence, parent_id) values ('cc管理', '', '2012-03-05 18:28:18', '5', 0);
+insert into menu(name, url, create_time, sequence, parent_id) values ('dd管理', '', '2012-03-05 18:28:18', '6', 0);
+insert into menu(name, url, create_time, sequence, parent_id) values ('ee管理', '', '2012-03-05 18:28:18', '7', 0);
+insert into menu(name, url, create_time, sequence, parent_id) values ('杂项', '', '2012-03-05 18:28:18', '8', 0);
+insert into menu(name, url, create_time, sequence, parent_id) values ('生成密码', 'pwdGen', '2012-03-05 18:28:18', '8.1', 13);

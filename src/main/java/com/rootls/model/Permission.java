@@ -3,6 +3,7 @@ package com.rootls.model;
 import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 /**
  * Created with IntelliJ IDEA.
@@ -12,6 +13,7 @@ import javax.persistence.Id;
  * To change this template use File | Settings | File Templates.
  */
 @Entity
+@Table(name = "permission")
 public class Permission {
     private Integer id;
 
