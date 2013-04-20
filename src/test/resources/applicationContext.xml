@@ -17,6 +17,6 @@
     <!--<import resource="classpath:spring/applicationContext-dataSource.xml"/>-->
 
     <!--导入jpa配置-->
-    <import resource="classpath:spring"/>
+    <import resource="classpath:spring/applicationContext-jpa.xml"/>
 
 </beans>

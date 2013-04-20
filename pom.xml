@@ -12,16 +12,18 @@
     <properties>
 
         <springframework.version>3.2.0.RELEASE</springframework.version>
-        <slf4j.version>1.6.4</slf4j.version>
-        <log4j.version>1.2.16</log4j.version>
+        <spring-data-jpa.version>1.3.0.RELEASE</spring-data-jpa.version>
+
+        <hibernate.version>4.1.3.Final</hibernate.version>
+        <hibernate-validator.version>4.3.0.Final</hibernate-validator.version>
+        <hibernate-jpa-2.0-api.version>1.0.0.Final</hibernate-jpa-2.0-api.version>
 
         <org.aspectj-version>1.6.12</org.aspectj-version>
-        <boneCP.version>0.7.1.RELEASE</boneCP.version>
-        <hibernate.version>4.1.3.Final</hibernate.version>
-        <sitemesh.version>2.4.2</sitemesh.version>
-        <hibernate-validator.version>4.3.0.Final</hibernate-validator.version>
         <javassist.version>3.16.1-GA</javassist.version>
         <cglib.version>2.2.2</cglib.version>
+
+        <slf4j.version>1.6.4</slf4j.version>
+        <log4j.version>1.2.16</log4j.version>
 
         <mysql-connector-java.version>5.1.18</mysql-connector-java.version>
 
@@ -30,12 +32,8 @@
 
         <joda-time.version>2.1</joda-time.version>
         <joda-time-jsptag.version>1.1.1</joda-time-jsptag.version>
-        <jackson.version>1.9.6</jackson.version>
-        <shiro.version>1.2.0</shiro.version>
-        <ehcache.version>2.5.2</ehcache.version>
-        <gson.version>2.2.1</gson.version>
-        <spymemcached.version>2.8.1</spymemcached.version>
 
+        <junit.version>4.11</junit.version>
 
     </properties>
 
@@ -68,12 +66,12 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
             <version>${springframework.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>commons-logging</groupId>
-                    <artifactId>commons-logging</artifactId>
-                </exclusion>
-            </exclusions>
+            <!--<exclusions>-->
+                <!--<exclusion>-->
+                    <!--<groupId>commons-logging</groupId>-->
+                    <!--<artifactId>commons-logging</artifactId>-->
+                <!--</exclusion>-->
+            <!--</exclusions>-->
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
@@ -85,6 +83,12 @@
             <artifactId>spring-webmvc</artifactId>
             <version>${springframework.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-jpa</artifactId>
+            <version>${spring-data-jpa.version}</version>
+        </dependency>
+
 
         <!-- Aspect -->
         <dependency>
@@ -93,13 +97,6 @@
             <version>${org.aspectj-version}</version>
         </dependency>
 
-
-        <!-- Jackson JSON Mapper -->
-        <dependency>
-            <groupId>org.codehaus.jackson</groupId>
-            <artifactId>jackson-mapper-asl</artifactId>
-            <version>${jackson.version}</version>
-        </dependency>
 
         <!-- Hibernate -->
         <dependency>
@@ -113,26 +110,24 @@
             <version>${hibernate.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.hibernate.javax.persistence</groupId>
+            <artifactId>hibernate-jpa-2.0-api</artifactId>
+            <version>${hibernate-jpa-2.0-api.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-entitymanager</artifactId>
+            <version>${hibernate.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+
         <!-- JSR 303 with Hibernate Validator -->
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-validator</artifactId>
             <version>${hibernate-validator.version}</version>
         </dependency>
-
-
-        <!-- joda-time -->
-        <dependency>
-            <groupId>joda-time</groupId>
-            <artifactId>joda-time</artifactId>
-            <version>${joda-time.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>joda-time</groupId>
-            <artifactId>joda-time-jsptags</artifactId>
-            <version>${joda-time-jsptag.version}</version>
-        </dependency>
-
 
         <!-- javassist -->
         <dependency>
@@ -149,20 +144,6 @@
             <version>${cglib.version}</version>
         </dependency>
 
-        <!-- dataSource use BoneCP -->
-        <dependency>
-            <groupId>com.jolbox</groupId>
-            <artifactId>bonecp</artifactId>
-            <version>${boneCP.version}</version>
-        </dependency>
-
-        <!-- sitemesh 2 -->
-        <dependency>
-            <groupId>opensymphony</groupId>
-            <artifactId>sitemesh</artifactId>
-            <version>${sitemesh.version}</version>
-        </dependency>
-
         <!-- Logging in favor of slf4j  -->
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -174,6 +155,18 @@
             <artifactId>slf4j-log4j12</artifactId>
             <version>${slf4j.version}</version>
             <scope>runtime</scope>
+        </dependency>
+
+        <!-- joda-time -->
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+            <version>${joda-time.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time-jsptags</artifactId>
+            <version>${joda-time-jsptag.version}</version>
         </dependency>
 
         <!-- commons-lang3 -->
@@ -199,11 +192,26 @@
         </dependency>
 
 
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>${springframework.version}</version>
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
 
 
     <build>
         <finalName>${project.artifactId}</finalName>
+
 
         <plugins>
             <plugin>
@@ -224,8 +232,71 @@
                 </configuration>
             </plugin>
 
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>sql-maven-plugin</artifactId>
+                <version>1.5</version>
+
+                <dependencies>
+                    <dependency>
+                        <groupId>mysql</groupId>
+                        <artifactId>mysql-connector-java</artifactId>
+                        <version>${mysql-connector-java.version}</version>
+                    </dependency>
+                </dependencies>
+
+                <configuration>
+                    <driver>com.mysql.jdbc.Driver</driver>
+                    <url>jdbc:mysql://localhost:3306/</url>
+                    <username>root</username>
+                    <password>123</password>
+                    <srcFiles>
+                        <srcFile>src/main/sql/data.sql</srcFile>
+                    </srcFiles>
+                </configuration>
+            </plugin>
+
         </plugins>
+
+
+        <!-- maven resources filter -->
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+
+        <filters>
+            <filter>src/main/filter/mavenFilters.properties</filter>
+        </filters>
+
     </build>
+
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <properties>
+                <db.driver>${dev.db.driverClass}</db.driver>
+                <db.url>${dev.db.jdbcUrl}</db.url>
+                <db.username>${dev.db.username}</db.username>
+                <db.password>${dev.db.password}</db.password>
+            </properties>
+        </profile>
+
+
+        <profile>
+            <id>test</id>
+            <properties>
+                <db.driver>${test.db.driverClass}</db.driver>
+                <db.url>${test.db.jdbcUrl}</db.url>
+                <db.username>${test.db.username}</db.username>
+                <db.password>${test.db.password}</db.password>
+            </properties>
+        </profile>
+
+    </profiles>
 
 
 </project>

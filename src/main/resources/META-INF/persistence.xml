@@ -2,12 +2,12 @@
 <persistence xmlns="http://java.sun.com/xml/ns/persistence" version="2.0">
 
     <persistence-unit name="com.rootls">
+        <provider>org.hibernate.ejb.HibernatePersistence</provider>
         <class>com.rootls.model.Menu</class>
-        <class>com.rootls.model.Permissions</class>
-        <class>com.rootls.model.Roles</class>
-        <class>com.rootls.model.RolesPermissions</class>
-        <class>com.rootls.model.UserRoles</class>
-        <class>com.rootls.model.Users</class>
+        <class>com.rootls.model.Permission</class>
+        <class>com.rootls.model.Role</class>
+        <class>com.rootls.model.User</class>
+
         <properties>
             <property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/db_test"/>
             <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver"/>
