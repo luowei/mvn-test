@@ -3,10 +3,10 @@
 
     <persistence-unit name="com.rootls">
         <provider>org.hibernate.ejb.HibernatePersistence</provider>
-        <class>com.rootls.model.Menu</class>
-        <class>com.rootls.model.Permission</class>
-        <class>com.rootls.model.Role</class>
-        <class>com.rootls.model.User</class>
+        <class>com.rootls.base.model.Menu</class>
+        <class>com.rootls.base.model.Permission</class>
+        <class>com.rootls.base.model.Role</class>
+        <class>com.rootls.base.model.User</class>
 
         <properties>
             <property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/db_test"/>

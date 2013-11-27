@@ -65,7 +65,7 @@
         even after a JVM restart.  -->
 
 
-    <cache name="com.rootls.model.User"
+    <cache name="com.rootls.base.model.User"
            maxElementsInMemory="100"
            overflowToDisk="true"
            eternal="true"
@@ -74,7 +74,7 @@
            diskPersistent="true"
            diskExpiryThreadIntervalSeconds="2000"/>
 
-    <cache name="com.rootls.model.User.userRoleSet"
+    <cache name="com.rootls.base.model.User.userRoleSet"
            maxElementsInMemory="1000"
            overflowToDisk="true"
            eternal="true"
@@ -84,7 +84,7 @@
            diskExpiryThreadIntervalSeconds="2000"/>
 
 
-    <cache name="com.rootls.model.Role"
+    <cache name="com.rootls.base.model.Role"
            maxElementsInMemory="100"
            overflowToDisk="true"
            eternal="true"
@@ -93,7 +93,7 @@
            diskPersistent="true"
            diskExpiryThreadIntervalSeconds="2000"/>
 
-    <cache name="com.rootls.model.Role.userRoleSet"
+    <cache name="com.rootls.base.model.Role.userRoleSet"
            maxElementsInMemory="1000"
            overflowToDisk="true"
            eternal="true"
@@ -102,7 +102,7 @@
            diskPersistent="true"
            diskExpiryThreadIntervalSeconds="2000"/>
 
-    <cache name="com.rootls.model.Role.permissionsSet"
+    <cache name="com.rootls.base.model.Role.permissionsSet"
            maxElementsInMemory="2000"
            overflowToDisk="true"
            eternal="true"
@@ -111,7 +111,7 @@
            diskPersistent="true"
            diskExpiryThreadIntervalSeconds="5000"/>
 
-    <cache name="com.rootls.model.UserRole"
+    <cache name="com.rootls.base.model.UserRole"
            maxElementsInMemory="1000"
            overflowToDisk="true"
            eternal="true"
@@ -120,7 +120,7 @@
            diskPersistent="true"
            diskExpiryThreadIntervalSeconds="2000"/>
 
-    <cache name="com.rootls.model.Permissions"
+    <cache name="com.rootls.base.model.Permissions"
            maxElementsInMemory="1000"
            overflowToDisk="true"
            eternal="true"

@@ -33,8 +33,24 @@
         <joda-time.version>2.1</joda-time.version>
         <joda-time-jsptag.version>1.1.1</joda-time-jsptag.version>
 
+        <boneCP.version>0.7.1.RELEASE</boneCP.version>
+        <sitemesh.version>2.4.2</sitemesh.version>
+        <jackson.version>1.9.6</jackson.version>
+        <shiro.version>1.2.0</shiro.version>
+        <ehcache.version>2.5.2</ehcache.version>
+        <gson.version>2.2.1</gson.version>
+        <spymemcached.version>2.8.1</spymemcached.version>
+
         <junit.version>4.11</junit.version>
 
+        <jdkVersion>1.6</jdkVersion>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <!--cargo configuration-->
+        <servlet.port>8880</servlet.port>
+        <hostname>192.168.1.54</hostname>
+        <username>ttpod</username>
+        <password>ttpod</password>
     </properties>
 
     <dependencies>
@@ -66,12 +82,12 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
             <version>${springframework.version}</version>
-            <!--<exclusions>-->
-                <!--<exclusion>-->
-                    <!--<groupId>commons-logging</groupId>-->
-                    <!--<artifactId>commons-logging</artifactId>-->
-                <!--</exclusion>-->
-            <!--</exclusions>-->
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
@@ -121,6 +137,11 @@
             <version>${hibernate.version}</version>
             <scope>runtime</scope>
         </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-ehcache</artifactId>
+            <version>${hibernate.version}</version>
+        </dependency>
 
         <!-- JSR 303 with Hibernate Validator -->
         <dependency>
@@ -143,6 +164,29 @@
             <artifactId>cglib</artifactId>
             <version>${cglib.version}</version>
         </dependency>
+
+        <!-- Jackson JSON Mapper -->
+        <dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-mapper-asl</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+
+
+        <!-- Google gson -->
+        <!--<dependency>-->
+            <!--<groupId>com.google.code.gson</groupId>-->
+            <!--<artifactId>gson</artifactId>-->
+            <!--<version>${gson.version}</version>-->
+        <!--</dependency>-->
+
+        <!-- sitemesh 2 -->
+        <dependency>
+            <groupId>opensymphony</groupId>
+            <artifactId>sitemesh</artifactId>
+            <version>${sitemesh.version}</version>
+        </dependency>
+
 
         <!-- Logging in favor of slf4j  -->
         <dependency>
@@ -191,6 +235,49 @@
             <scope>runtime</scope>
         </dependency>
 
+        <!-- dataSource use BoneCP -->
+        <dependency>
+            <groupId>com.jolbox</groupId>
+            <artifactId>bonecp</artifactId>
+            <version>${boneCP.version}</version>
+        </dependency>
+
+        <!-- Shiro -->
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-core</artifactId>
+            <version>${shiro.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-web</artifactId>
+            <version>${shiro.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-ehcache</artifactId>
+            <version>${shiro.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-spring</artifactId>
+            <version>${shiro.version}</version>
+        </dependency>
+
+        <!-- ehcache -->
+        <dependency>
+            <groupId>net.sf.ehcache</groupId>
+            <artifactId>ehcache-core</artifactId>
+            <version>${ehcache.version}</version>
+        </dependency>
+
+        <!-- spymemcached -->
+        <dependency>
+            <groupId>spy</groupId>
+            <artifactId>spymemcached</artifactId>
+            <version>${spymemcached.version}</version>
+        </dependency>
+
 
         <dependency>
             <groupId>junit</groupId>
@@ -214,6 +301,31 @@
 
 
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.4</version>
+                <configuration>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                    <source>${jdkVersion}</source>
+                    <target>${jdkVersion}</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>2.5</version>
+                <configuration>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.12</version>
+            </plugin>
+
+
             <plugin>
                 <groupId>org.mortbay.jetty</groupId>
                 <artifactId>jetty-maven-plugin</artifactId>
@@ -257,6 +369,47 @@
                 </configuration>
             </plugin>
 
+            <plugin>
+                <groupId>org.codehaus.cargo</groupId>
+                <artifactId>cargo-maven2-plugin</artifactId>
+                <version>1.2.1</version>
+                <configuration>
+                    <container>
+                        <containerId>tomcat6x</containerId>
+                        <type>remote</type>
+                    </container>
+                    <configuration>
+                        <type>runtime</type>
+                        <properties>
+                            <cargo.hostname>${hostname}</cargo.hostname>
+                            <cargo.servlet.port>${servlet.port}</cargo.servlet.port>
+                            <cargo.remote.username>${username}</cargo.remote.username>
+                            <cargo.remote.password>${password}</cargo.remote.password>
+                            <cargo.tomcat.manager.url>
+                                http://${hostname}:${servlet.port}/manager/html
+                            </cargo.tomcat.manager.url>
+                        </properties>
+                    </configuration>
+                    <deployer>
+                        <deployables>
+                            <!--
+                            The project's artifact is automatically deployed if no deployable
+                            is defined. However, we define it here so that we can specify the
+                            context (we don't want the version to be included in the context).
+                            -->
+                            <deployable>
+                                <groupId>${project.groupId}</groupId>
+                                <artifactId>${project.artifactId}</artifactId>
+                                <type>war</type>
+                                <pingURL>http://${hostname}:${servlet.port}</pingURL>
+                                <properties>
+                                    <context>${project.artifactId}</context>
+                                </properties>
+                            </deployable>
+                        </deployables>
+                    </deployer>
+                </configuration>
+            </plugin>
         </plugins>
 
 

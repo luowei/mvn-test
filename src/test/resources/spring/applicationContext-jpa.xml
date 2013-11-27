@@ -17,6 +17,6 @@
         <beans:property name="entityManagerFactory" ref="entityManagerFactory" />
     </beans:bean>
 
-    <repositories base-package="com.rootls.repository" />
+    <repositories base-package="com.rootls.base.repository" />
 
 </beans:beans>
