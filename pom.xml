@@ -29,6 +29,7 @@
 
         <commons-lang.version>3.1</commons-lang.version>
         <commons-collections.version>3.2.1</commons-collections.version>
+        <commons-dbcp.version>1.4</commons-dbcp.version>
 
         <joda-time.version>2.1</joda-time.version>
         <joda-time-jsptag.version>1.1.1</joda-time-jsptag.version>
@@ -236,11 +237,17 @@
         </dependency>
 
         <!-- dataSource use BoneCP -->
+        <!--<dependency>-->
+            <!--<groupId>com.jolbox</groupId>-->
+            <!--<artifactId>bonecp</artifactId>-->
+            <!--<version>${boneCP.version}</version>-->
+        <!--</dependency>-->
         <dependency>
-            <groupId>com.jolbox</groupId>
-            <artifactId>bonecp</artifactId>
-            <version>${boneCP.version}</version>
+            <groupId>commons-dbcp</groupId>
+            <artifactId>commons-dbcp</artifactId>
+            <version>${commons-dbcp.version}</version>
         </dependency>
+
 
         <!-- Shiro -->
         <dependency>

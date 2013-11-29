@@ -11,11 +11,20 @@
 
 
     <!-- dataSource use BoneCP  -->
-    <bean id="dataSource" class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
-        <property name="driverClass" value="${db.driverClass}"/>
+    <!--<bean id="dataSource" class="org.springframework.jdbc.datasource.SimpleDriverDataSource">-->
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+        <property name="driverClassName" value="${db.driverClass}"/>
         <property name="url" value="${db.jdbcUrl}"/>
         <property name="username" value="${db.username}"/>
         <property name="password" value="${db.password}"/>
+        
+        <property name="initialSize" value="${initalSize}"/>
+        <property name="maxActive" value="${maxActive}"/>
+        <property name="maxIdle" value="${maxIdle}"/>
+        <property name="minIdle" value="${minIdle}"/>
+        <property name="removeAbandoned" value="${removeAbandoned}"/>
+        <property name="removeAbandonedTimeout" value="${removeAbandonedTimeout}"/>
+
     </bean>
 
 </beans>
