@@ -106,23 +106,27 @@ public abstract class UrlBuilder {
 
 
     public enum Type {
-        EQ, GT, GE, LT, LG, LIKE
+        EQ, GT, GE, LT, LG, LE, LIKE
     }
 
     /**
      * @className:PropertyFilter
      * @classDescription:
-     * @author:Administrator
-     * @createTime:12-4-28
+     * @author:luowei
+     * @createTime:12-10-12
      */
     public static class PropertyFilter {
         private String name;    // 条件名称
         private Object value;   // 条件值
         private Type type;      // 查询类型
 
+        public PropertyFilter() {
+        }
+
         public PropertyFilter(String name, Object value) {
             this.name = name;
             this.value = value;
+            this.type = Type.EQ;
         }
 
         public PropertyFilter(String name, Object value, Type type) {
@@ -157,18 +161,37 @@ public abstract class UrlBuilder {
 
         /**
          * 返回当前条件参数是否有效,字符串不为空,非字符串的不为null
+         *
          * @return
          */
         public boolean isNotBlankOfThisPropertyValue() {
-            if(value instanceof String){
+            if (value instanceof String) {
                 String str = (String) value;
 
                 return (null != str && !str.trim().isEmpty());
-            }else {
+            } else {
                 return (null != value);
             }
 
         }
+
+        /**
+         * 添加属性
+         *
+         * @param name
+         * @param value
+         * @return
+         */
+        public PropertyFilter add(String name, String value, Type type) {
+
+            if (name != null && name != "") {
+                if (type == null) {
+                    type = Type.EQ;
+                }
+                return new PropertyFilter(name, value, type);
+            } else return this;
+        }
     }
+
     
 }

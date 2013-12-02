@@ -1,8 +1,6 @@
 package com.rootls.base.view.controller.manage;
 
 import com.rootls.base.bean.Constants;
-import com.rootls.base.bean.DataTable;
-import com.rootls.base.bean.PageRequest;
 import com.rootls.base.model.Menu;
 import com.rootls.base.service.MenuService;
 import com.rootls.base.util.UrlBuilder;
@@ -11,6 +9,8 @@ import com.rootls.base.view.controller.BaseController;
 import com.rootls.base.view.groups.MenuBatchDeleteGroup;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -42,6 +42,7 @@ public class MenuController extends BaseController {
 
     /**
      * 分页列出所有菜单
+     *
      * @param menuCommand
      * @param model
      * @param request
@@ -62,45 +63,32 @@ public class MenuController extends BaseController {
         int pageSize = Constants.DEFAULT_PAGE_SIZE;
         int totalPages = (int) (totalElements + pageSize - 1) / pageSize;
         int page = getPageNoFromString(pageStr);
-        if(model.containsAttribute(Constants.ADD_FLAG)){
+        if (model.containsAttribute(Constants.ADD_FLAG)) {
             page = totalPages;
-        }else {
+        } else {
             page = Math.min(totalPages, page);
         }
 
-        PageRequest pageRequest = new PageRequest(page, Constants.DEFAULT_PAGE_SIZE, orders);
+        //构建pagerequest对象
+        PageRequest pageRequest = new PageRequest(page - 1, pageSize, getSort(orders) );
 
 
-        //添加搜索条件
-        List<UrlBuilder.PropertyFilter> pfList = new ArrayList<UrlBuilder.PropertyFilter>() ;
+        //构建查询条件
+        List<UrlBuilder.PropertyFilter> pfList = new ArrayList<UrlBuilder.PropertyFilter>();
         pfList.add(new PropertyFilter("name", menuName, UrlBuilder.Type.LIKE));
         pfList.add(new PropertyFilter("createTime", startTime, UrlBuilder.Type.GE));
 
-        DataTable<Menu> dataTable = menuService.getDataTableByCriteriaQuery(pageRequest, pfList);
-        model.addAttribute("dataTable", dataTable);
+        Page<Menu> resultPage = menuService.getPageByCriteriaQuery(pageRequest, pfList);
 
-        //添加索引号
-        model.addAttribute("index", pageRequest.getOffset());
-
-
-        //添加分页条件
+        //添加返回的查询条件
         List<UrlBuilder.PropertyFilter> searchConditionList = new ArrayList<UrlBuilder.PropertyFilter>();
         searchConditionList.add(new PropertyFilter("searchKey1", menuName));
         searchConditionList.add(new PropertyFilter("startTime", startTime == null ? null : new DateTime(startTime).toString("yyyy-MM-dd")));
-        String conditionUrl = UrlBuilder.getUrl("/manage/menu/list", searchConditionList);
-        String conditionAndOrdersUrl = UrlBuilder.getOrdersUrl(conditionUrl, orders);
-        dataTable.setConditionUrl(request.getContextPath()+conditionAndOrdersUrl);
 
-        //添加排序条件
-        model.addAttribute("order", conditionAndOrdersUrl);
-
-
-        //添加url到cookie
-        addRediectUrlCookie(request, response, page, conditionUrl);
+        addPageInfo(model, request, response, orders, page, pageRequest, resultPage, searchConditionList,"/manage/menu/list");
 
         return "/manage/menu/list";
     }
-
 
     @ModelAttribute
     public MenuCommand createMenuCommand() {
@@ -110,11 +98,13 @@ public class MenuController extends BaseController {
 
     /**
      * 返回json格式的顶级菜单列表
+     *
      * @return
      */
-    @RequestMapping(value="/topLevelMenus", method= RequestMethod.GET)
-    public @ResponseBody
-    List<Menu> getTopLevelMenuList(){
+    @RequestMapping(value = "/topLevelMenus", method = RequestMethod.GET)
+    public
+    @ResponseBody
+    List<Menu> getTopLevelMenuList() {
 
         return menuService.getTopLevelMenus();
     }
@@ -122,11 +112,13 @@ public class MenuController extends BaseController {
 
     /**
      * 返回json格式的第一个菜单
+     *
      * @return
      */
-    @RequestMapping(value="/firstSubMenu", method= RequestMethod.GET)
-    public @ResponseBody
-    Menu getFirstSubMenu(){
+    @RequestMapping(value = "/firstSubMenu", method = RequestMethod.GET)
+    public
+    @ResponseBody
+    Menu getFirstSubMenu() {
 
         return menuService.getFirstSubMenu();
     }
@@ -134,20 +126,22 @@ public class MenuController extends BaseController {
 
     /**
      * 根据父级菜单id查找其子菜单
+     *
      * @param id
      * @return
      */
-    @RequestMapping(value="/subMenu/{id}", method= RequestMethod.GET)
-    public @ResponseBody
-    Menu getSubMenu(@PathVariable int id){
+    @RequestMapping(value = "/subMenu/{id}", method = RequestMethod.GET)
+    public
+    @ResponseBody
+    Menu getSubMenu(@PathVariable int id) {
 
         return menuService.getSubMenu(id);
     }
 
 
-
     /**
      * 编辑菜单
+     *
      * @param id
      * @param model
      * @return
@@ -168,6 +162,7 @@ public class MenuController extends BaseController {
 
     /**
      * 更新菜单
+     *
      * @param menu
      * @param result
      * @param redirectAttrs
@@ -186,15 +181,15 @@ public class MenuController extends BaseController {
             return null;
         }
 
-        Menu menus = menuService.findById(menu.getId());
+        Menu mnu = menuService.findById(menu.getId());
 
         //设置更新参数
-        menus.setName(menu.getName());
-        menus.setSequence(menu.getSequence());
-        menus.setUrl(menu.getUrl());
+        mnu.setName(menu.getName());
+        mnu.setSequence(menu.getSequence());
+        mnu.setUrl(menu.getUrl());
 
         //更新
-        menuService.update(menus);
+        menuService.update(mnu);
 
         //添加一条成功消息
         addUpdateSuccessMessage(redirectAttrs);
@@ -228,6 +223,7 @@ public class MenuController extends BaseController {
 
     /**
      * 批量删除菜单
+     *
      * @param menuCommand
      * @param result
      * @param redirectAttrs
@@ -250,13 +246,13 @@ public class MenuController extends BaseController {
     }
 
 
-
     /**
      * 显示菜单添加页面
+     *
      * @param model
      */
     @RequestMapping(value = "/add", method = RequestMethod.GET)
-    public void showMenuAddPage(Model model){
+    public void showMenuAddPage(Model model) {
         model.addAttribute("menu", new Menu());
         model.addAttribute("topLevelMenuList", menuService.getTopLevelMenus());
     }
@@ -264,6 +260,7 @@ public class MenuController extends BaseController {
 
     /**
      * 添加菜单
+     *
      * @param menu
      * @param result
      * @param model
@@ -274,9 +271,9 @@ public class MenuController extends BaseController {
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public String add(@Valid Menu menu, BindingResult result, Model model,
                       RedirectAttributes redirectAttrs,
-                      @CookieValue(Constants.REDIRECT_URL) String redirectUrl){
+                      @CookieValue(Constants.REDIRECT_URL) String redirectUrl) {
 
-        if(result.hasErrors()){
+        if (result.hasErrors()) {
             model.addAttribute("topLevelMenuList", menuService.getTopLevelMenus());
             return null;
         }

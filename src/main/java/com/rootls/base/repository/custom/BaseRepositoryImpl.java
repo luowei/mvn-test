@@ -1,6 +1,7 @@
 package com.rootls.base.repository.custom;
 
 import com.rootls.base.model.IdEntity;
+import com.rootls.base.util.GenericsUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
@@ -23,6 +24,12 @@ import javax.sql.DataSource;
 @Transactional
 public class BaseRepositoryImpl<T extends IdEntity> extends JdbcDaoSupport implements BaseRepository<T> {
 
+    private final Class<T> entityClass = GenericsUtils.getSuperClassGenricType(getClass());
+
+    protected Class<T> clazzz;
+    public Class<T> getClazzz() {
+        return clazzz;
+    }
 
     //注入JPA EntityManager
     @PersistenceContext(unitName = "jpa.trade")
@@ -41,5 +48,7 @@ public class BaseRepositoryImpl<T extends IdEntity> extends JdbcDaoSupport imple
     void init(){
         setDataSource(dataSource);
     }
+
+
 
 }

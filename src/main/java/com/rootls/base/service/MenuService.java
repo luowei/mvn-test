@@ -1,9 +1,9 @@
 package com.rootls.base.service;
 
-import com.rootls.base.bean.DataTable;
-import com.rootls.base.bean.PageRequest;
 import com.rootls.base.model.Menu;
 import com.rootls.base.util.UrlBuilder;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 
 import java.util.List;
 
@@ -17,7 +17,7 @@ import java.util.List;
 public interface MenuService {
     long count();
 
-    DataTable<Menu> getDataTableByCriteriaQuery(PageRequest pageRequest, List<UrlBuilder.PropertyFilter> pfList);
+    Page<Menu> getPageByCriteriaQuery(PageRequest pageRequest, List<UrlBuilder.PropertyFilter> pfList);
 
     List<Menu> getTopLevelMenus();
 
@@ -27,7 +27,7 @@ public interface MenuService {
 
     Menu findById(Integer id);
 
-    void update(Menu menus);
+    void update(Menu menu);
 
     void delete(int id);
 

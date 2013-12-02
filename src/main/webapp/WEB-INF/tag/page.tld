@@ -15,7 +15,7 @@
     <tag>
         <description>page tag</description>
         <name>page</name>
-        <tag-class>com.ttpod.demo.view.tag.PageTagSupport</tag-class>
+        <tag-class>com.rootls.base.view.tag.PageTagSupport</tag-class>
         <body-content>empty</body-content>
         <attribute>
             <description></description>

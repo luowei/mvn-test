@@ -1,16 +1,24 @@
 package com.rootls.base.view.controller;
 
 import com.rootls.base.bean.Constants;
+import com.rootls.base.bean.DataTable;
+import com.rootls.base.model.Menu;
 import com.rootls.base.util.CookieUtils;
 import com.rootls.base.util.UrlBuilder;
 import com.rootls.base.view.command.BaseCommand;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @className:BaseController
@@ -118,6 +126,67 @@ public class BaseController {
      */
     protected void addDeleteSuccessMessage(RedirectAttributes redirectAttrs){
         addRedirectMessage(redirectAttrs, "删除成功");
+    }
+
+    /**
+     * 添加页面信息
+     * @param model
+     * @param request
+     * @param response
+     * @param orders
+     * @param page
+     * @param pageRequest
+     * @param resultPage
+     * @param searchConditionList
+     * @param thisUrl
+     */
+    protected void addPageInfo(Model model, HttpServletRequest request, HttpServletResponse response, String orders,int page,
+                            PageRequest pageRequest, Page<Menu> resultPage, List<UrlBuilder.PropertyFilter> searchConditionList,String thisUrl) {
+
+        String conditionUrl = UrlBuilder.getUrl(thisUrl, searchConditionList);
+        String conditionAndOrdersUrl = UrlBuilder.getOrdersUrl(conditionUrl, orders);
+
+        DataTable<Menu> dataTable = new DataTable<Menu>();
+        dataTable.setContent(resultPage.getContent());
+        dataTable.setCurrentPage(resultPage.getNumber());
+        dataTable.setStartIndex(pageRequest.getOffset());
+        dataTable.setPageSize(pageRequest.getPageSize());
+        dataTable.setConditionUrl(request.getContextPath() + conditionAndOrdersUrl);
+
+        model.addAttribute("dataTable", dataTable);
+        model.addAttribute("order", conditionAndOrdersUrl);
+        model.addAttribute("index", pageRequest.getOffset());
+
+
+        //添加url到cookie
+        addRediectUrlCookie(request, response, page, conditionUrl);
+    }
+
+    /**
+     * 获得排序
+     * @param orders
+     * @return
+     */
+    protected Sort getSort(String orders) {
+        if (orders == null || orders == "") {
+            return null;
+        }
+        Sort sort = null;
+        if (orders.indexOf(":") > 0) {
+
+            List<Sort.Order> orderList = new ArrayList<Sort.Order>();
+            for (String order : orders.split(",")) {
+                String[] subOrder = order.split(";");
+                Sort.Direction direction = Sort.Direction.valueOf(subOrder[0].trim());
+                String properties = subOrder[1].trim();
+
+                orderList.add(new Sort.Order(direction, properties));
+            }
+            sort = new Sort(orderList);
+        } else {
+            sort = new Sort(orders.split(","));
+        }
+        return sort;
     }
 }
 

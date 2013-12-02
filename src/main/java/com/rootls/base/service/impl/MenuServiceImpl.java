@@ -1,12 +1,16 @@
 package com.rootls.base.service.impl;
 
-import com.rootls.base.bean.DataTable;
-import com.rootls.base.bean.PageRequest;
 import com.rootls.base.model.Menu;
+import com.rootls.base.repository.MenuRepository;
 import com.rootls.base.service.MenuService;
+import com.rootls.base.util.DynamicSpecifications;
 import com.rootls.base.util.UrlBuilder;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -17,40 +21,47 @@ import java.util.List;
  * To change this template use File | Settings | File Templates.
  */
 @Service
-public class MenuServiceImpl implements MenuService{
+public class MenuServiceImpl implements MenuService {
+
+    @Resource
+    MenuRepository menuRepository;
+
     @Override
     public long count() {
-        return 0;  //To change body of implemented methods use File | Settings | File Templates.
+        return menuRepository.count();
     }
 
     @Override
-    public DataTable<Menu> getDataTableByCriteriaQuery(PageRequest pageRequest, List<UrlBuilder.PropertyFilter> pfList) {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    public Page<Menu> getPageByCriteriaQuery(PageRequest pageRequest, List<UrlBuilder.PropertyFilter> pfList) {
+        Specification<Menu> spec = DynamicSpecifications.<Menu>byPropertyFilter(pfList, Menu.class);
+        return menuRepository.findAll(spec, pageRequest);
     }
 
     @Override
     public List<Menu> getTopLevelMenus() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        return menuRepository.findByParentIdOrderBySequenceAsc(0);
     }
 
     @Override
     public Menu getFirstSubMenu() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        return menuRepository.getFirstSubMenu();
     }
 
     @Override
     public Menu getSubMenu(int id) {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        Menu menu = menuRepository.findById(id);
+        menu.setSubMenus(menuRepository.getSubMenu(id));
+        return menu;
     }
 
     @Override
     public Menu findById(Integer id) {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        return menuRepository.findById(id);
     }
 
     @Override
-    public void update(Menu menus) {
-        //To change body of implemented methods use File | Settings | File Templates.
+    public void update(Menu menu) {
+        menuRepository.update(menu);
     }
 
     @Override

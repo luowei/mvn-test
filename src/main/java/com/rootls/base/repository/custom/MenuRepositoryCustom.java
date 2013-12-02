@@ -3,6 +3,8 @@ package com.rootls.base.repository.custom;
 import com.rootls.base.model.Menu;
 import org.springframework.data.repository.NoRepositoryBean;
 
+import java.util.List;
+
 /**
  * Created with IntelliJ IDEA.
  * User: luowei
@@ -12,4 +14,10 @@ import org.springframework.data.repository.NoRepositoryBean;
  */
 @NoRepositoryBean
 public interface MenuRepositoryCustom extends BaseRepository<Menu>{
+
+    Menu getFirstSubMenu();
+
+    List<Menu> getSubMenu(int id);
+
+    void update(Menu menu);
 }
