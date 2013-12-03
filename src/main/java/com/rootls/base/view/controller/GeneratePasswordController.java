@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 /**
  * @className:GeneratePasswordController
  * @classDescription:
- * @author:Administrator
+ * @author:luowei
  * @createTime:12-5-17
  */
 @Controller

@@ -19,7 +19,7 @@ import java.util.concurrent.TimeoutException;
 /**
  * @className:SpyMemcachedManager
  * @classDescription:
- * @author:Administrator
+ * @author:luowei
  * @createTime:12-6-12
  */
 public abstract class SpyMemcachedManager implements CacheManager {

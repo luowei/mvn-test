@@ -1,12 +1,16 @@
 package com.rootls.base.service.impl;
 
-import com.rootls.base.bean.DataTable;
-import com.rootls.base.bean.PageRequest;
 import com.rootls.base.model.User;
+import com.rootls.base.repository.UserRepository;
 import com.rootls.base.service.UserService;
+import com.rootls.base.util.DynamicSpecifications;
 import com.rootls.base.util.UrlBuilder;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -18,6 +22,10 @@ import java.util.List;
  */
 @Service
 public class UserServiceImpl implements UserService {
+
+    @Resource
+    UserRepository userRepository;
+
     @Override
     public User getCurrentUser() {
         return null;  //To change body of implemented methods use File | Settings | File Templates.
@@ -25,31 +33,32 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public long count() {
-        return 0;  //To change body of implemented methods use File | Settings | File Templates.
+        return userRepository.count();
     }
 
     @Override
-    public DataTable<User> getDataTableByCriteriaQuery(PageRequest pageRequest, List<UrlBuilder.PropertyFilter> pfList) {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    public Page<User> getDataTableByCriteriaQuery(PageRequest pageRequest, List<UrlBuilder.PropertyFilter> pfList) {
+        Specification<User> spec = DynamicSpecifications.<User>byPropertyFilter(pfList, User.class);
+        return userRepository.findAll(spec, pageRequest);
     }
 
     @Override
     public User findById(Integer id) {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        return userRepository.findById(id);
     }
 
     @Override
     public void update(User user) {
-        //To change body of implemented methods use File | Settings | File Templates.
+        userRepository.save(user);
     }
 
     @Override
     public void delete(Integer id) {
-        //To change body of implemented methods use File | Settings | File Templates.
+        userRepository.delete(id);
     }
 
     @Override
     public void batchDelete(Integer[] ids) {
-        //To change body of implemented methods use File | Settings | File Templates.
+        userRepository.batchDelete(ids,User.class);
     }
 }

@@ -5,7 +5,7 @@ import java.security.MessageDigest;
 /**
  * @className:MD5Utils
  * @classDescription:
- * @author:Administrator
+ * @author:luowei
  * @createTime:12-6-12
  */
 public class MD5Utils {

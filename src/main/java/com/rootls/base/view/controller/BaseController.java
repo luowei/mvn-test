@@ -2,7 +2,7 @@ package com.rootls.base.view.controller;
 
 import com.rootls.base.bean.Constants;
 import com.rootls.base.bean.DataTable;
-import com.rootls.base.model.Menu;
+import com.rootls.base.model.IdEntity;
 import com.rootls.base.util.CookieUtils;
 import com.rootls.base.util.UrlBuilder;
 import com.rootls.base.view.command.BaseCommand;
@@ -23,7 +23,7 @@ import java.util.List;
 /**
  * @className:BaseController
  * @classDescription:
- * @author:Administrator
+ * @author:luowei
  * @createTime:12-4-19
  */
 public class BaseController {
@@ -140,13 +140,13 @@ public class BaseController {
      * @param searchConditionList
      * @param thisUrl
      */
-    protected void addPageInfo(Model model, HttpServletRequest request, HttpServletResponse response, String orders,int page,
-                            PageRequest pageRequest, Page<Menu> resultPage, List<UrlBuilder.PropertyFilter> searchConditionList,String thisUrl) {
+    protected <E extends IdEntity> void  addPageInfo(Model model, HttpServletRequest request, HttpServletResponse response, String orders,int page,
+                            PageRequest pageRequest, Page<E> resultPage, List<UrlBuilder.PropertyFilter> searchConditionList,String thisUrl) {
 
         String conditionUrl = UrlBuilder.getUrl(thisUrl, searchConditionList);
         String conditionAndOrdersUrl = UrlBuilder.getOrdersUrl(conditionUrl, orders);
 
-        DataTable<Menu> dataTable = new DataTable<Menu>();
+        DataTable<E> dataTable = new DataTable<E>();
         dataTable.setContent(resultPage.getContent());
         dataTable.setCurrentPage(resultPage.getNumber());
         dataTable.setStartIndex(pageRequest.getOffset());

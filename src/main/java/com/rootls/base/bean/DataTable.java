@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * @className:Page
  * @classDescription:
- * @author:Administrator
+ * @author:luowei
  * @createTime:12-4-12
  */
 public class DataTable<T> implements Serializable {

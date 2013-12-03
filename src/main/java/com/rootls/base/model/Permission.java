@@ -2,7 +2,6 @@ package com.rootls.base.model;
 
 import javax.persistence.Basic;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
@@ -14,17 +13,28 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "permission")
-public class Permission {
-    private Integer id;
+public class Permission extends IdEntity implements Cloneable{
+    private boolean checked;
+    private boolean open;
+//    private Integer id;
+//
+//    @javax.persistence.Column(name = "id", nullable = false, insertable = true, updatable = true, length = 10, precision = 0)
+//    @Id
+//    public Integer getId() {
+//        return id;
+//    }
+//
+//    public void setId(Integer id) {
+//        this.id = id;
+//    }
 
-    @javax.persistence.Column(name = "id", nullable = false, insertable = true, updatable = true, length = 10, precision = 0)
-    @Id
-    public Integer getId() {
-        return id;
+
+    public Permission() {
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public Permission(String description, Integer permissionGroupId) {
+        this.description = description;
+        this.permissionGroupId = permissionGroupId;
     }
 
     private String permission;
@@ -63,6 +73,24 @@ public class Permission {
         this.permissionGroupId = permissionGroupId;
     }
 
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
 
+    public void setChecked(boolean checked) {
+        this.checked = checked;
+    }
 
+    public boolean isChecked() {
+        return checked;
+    }
+
+    public void setOpen(boolean open) {
+        this.open = open;
+    }
+
+    public boolean isOpen() {
+        return open;
+    }
 }

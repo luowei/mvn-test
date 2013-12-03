@@ -1,9 +1,9 @@
 package com.rootls.base.service;
 
-import com.rootls.base.bean.DataTable;
-import com.rootls.base.bean.PageRequest;
 import com.rootls.base.model.User;
 import com.rootls.base.util.UrlBuilder;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 
 import java.util.List;
 
@@ -19,7 +19,7 @@ public interface UserService {
 
     long count();
 
-    DataTable<User> getDataTableByCriteriaQuery(PageRequest pageRequest, List<UrlBuilder.PropertyFilter> pfList);
+    Page<User> getDataTableByCriteriaQuery(PageRequest pageRequest, List<UrlBuilder.PropertyFilter> pfList);
 
     User findById(Integer id);
 

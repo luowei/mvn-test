@@ -15,7 +15,7 @@ import java.io.IOException;
 /**
  * @className:CachedAspect
  * @classDescription:
- * @author:Administrator
+ * @author:luowei
  * @createTime:12-6-12
  */
 @Aspect

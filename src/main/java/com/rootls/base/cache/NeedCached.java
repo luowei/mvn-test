@@ -8,7 +8,7 @@ import java.lang.annotation.Target;
 /**
  * @className:NeedCached
  * @classDescription:
- * @author:Administrator
+ * @author:luowei
  * @createTime:12-6-12
  */
 @Retention(RetentionPolicy.RUNTIME)

@@ -66,16 +66,16 @@ public class MenuServiceImpl implements MenuService {
 
     @Override
     public void delete(int id) {
-        //To change body of implemented methods use File | Settings | File Templates.
+        menuRepository.delete(id);
     }
 
     @Override
     public void batchDelete(Integer[] menuIds) {
-        //To change body of implemented methods use File | Settings | File Templates.
+        menuRepository.batchDelete(menuIds,Menu.class);
     }
 
     @Override
     public void save(Menu menu) {
-        //To change body of implemented methods use File | Settings | File Templates.
+        menuRepository.save(menu);
     }
 }

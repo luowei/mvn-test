@@ -6,7 +6,7 @@ import javax.persistence.Entity;
 /**
  * @className:QueryUtils
  * @classDescription:
- * @author:Administrator
+ * @author:luowei
  * @createTime:12-4-12
  */
 public abstract class QueryUtils {

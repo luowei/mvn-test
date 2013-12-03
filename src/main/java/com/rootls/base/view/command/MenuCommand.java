@@ -6,7 +6,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 /**
- * User: Administrator
+ * User: luowei
  * Date: 12-5-26
  * Time: 上午2:08
  */

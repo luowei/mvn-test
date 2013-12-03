@@ -8,7 +8,7 @@ import java.net.URLDecoder;
 import java.net.URLEncoder;
 
 /**
- * User: Administrator
+ * User: luowei
  * Date: 12-4-30
  * Time: 下午3:50
  */

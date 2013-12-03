@@ -3,7 +3,7 @@ package com.rootls.base.cache;
 /**
  * @className:SpyMemcachedServer
  * @classDescription:
- * @author:Administrator
+ * @author:luowei
  * @createTime:12-6-12
  */
 public class SpyMemcachedServer {

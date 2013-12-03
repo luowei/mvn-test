@@ -10,7 +10,7 @@ import java.util.Date;
 /**
  * @className:BaseDTO
  * @classDescription:
- * @author:Administrator
+ * @author:luowei
  * @createTime:12-4-19
  */
 public class BaseCommand {

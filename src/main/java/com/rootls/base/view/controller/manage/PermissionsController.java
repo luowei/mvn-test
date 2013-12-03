@@ -1,8 +1,6 @@
 package com.rootls.base.view.controller.manage;
 
 import com.rootls.base.bean.Constants;
-import com.rootls.base.bean.DataTable;
-import com.rootls.base.bean.PageRequest;
 import com.rootls.base.model.Permission;
 import com.rootls.base.service.PermissionService;
 import com.rootls.base.util.UrlBuilder;
@@ -11,6 +9,8 @@ import com.rootls.base.view.controller.BaseController;
 import com.rootls.base.view.groups.BatchDeleteGroup;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -31,7 +31,7 @@ import java.util.List;
 /**
  * @className:PermissionsController
  * @classDescription:
- * @author:Administrator
+ * @author:luowei
  * @createTime:12-6-7
  */
 @Controller
@@ -40,10 +40,6 @@ public class PermissionsController extends BaseController {
 
     @Autowired
     private PermissionService permissionService;
-
-
-
-
 
 
     /**
@@ -75,36 +71,23 @@ public class PermissionsController extends BaseController {
             page = Math.min(totalPages, page);
         }
 
-        PageRequest pageRequest = new PageRequest(page, Constants.DEFAULT_PAGE_SIZE, orders);
-
+        //构建pagerequest对象
+        PageRequest pageRequest = new PageRequest(page - 1, pageSize, getSort(orders) );
 
         //添加搜索条件
         List<UrlBuilder.PropertyFilter> pfList = new ArrayList<UrlBuilder.PropertyFilter>() ;
         pfList.add(new UrlBuilder.PropertyFilter("permission", permission, UrlBuilder.Type.LIKE));
         pfList.add(new UrlBuilder.PropertyFilter("description", description, UrlBuilder.Type.LIKE));
 
-        DataTable<Permission> dataTable = permissionService.getDataTableByCriteriaQuery(pageRequest, pfList);
-        model.addAttribute("dataTable", dataTable);
-
-        //添加索引号
-        model.addAttribute("index", pageRequest.getOffset());
-
+        Page<Permission> resultPage= permissionService.getDataTableByCriteriaQuery(pageRequest, pfList);
 
         //添加分页条件
         List<UrlBuilder.PropertyFilter> searchConditionList = new ArrayList<UrlBuilder.PropertyFilter>();
         searchConditionList.add(new UrlBuilder.PropertyFilter("searchKey1", permission));
         searchConditionList.add(new UrlBuilder.PropertyFilter("searchKey2", description));
         searchConditionList.add(new UrlBuilder.PropertyFilter("startTime", startTime == null ? null : new DateTime(startTime).toString("yyyy-MM-dd")));
-        String conditionUrl = UrlBuilder.getUrl("/manage/permissions/list", searchConditionList);
-        String conditionAndOrdersUrl = UrlBuilder.getOrdersUrl(conditionUrl, orders);
-        dataTable.setConditionUrl(request.getContextPath()+conditionAndOrdersUrl);
 
-        //添加排序条件
-        model.addAttribute("order", conditionAndOrdersUrl);
-
-
-        //添加url到cookie
-        addRediectUrlCookie(request, response, page, conditionUrl);
+        addPageInfo(model, request, response, orders, page, pageRequest, resultPage, searchConditionList,"/manage/permissions/list");
 
         return "/manage/permissions/list";
     }

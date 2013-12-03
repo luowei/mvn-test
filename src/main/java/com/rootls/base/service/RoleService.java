@@ -1,9 +1,9 @@
 package com.rootls.base.service;
 
-import com.rootls.base.bean.DataTable;
-import com.rootls.base.bean.PageRequest;
 import com.rootls.base.model.Role;
 import com.rootls.base.util.UrlBuilder;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 
 import java.util.List;
 
@@ -17,13 +17,13 @@ import java.util.List;
 public interface RoleService {
     long count();
 
-    DataTable<Role> getDataTableByCriteriaQuery(PageRequest pageRequest, List<UrlBuilder.PropertyFilter> pfList);
+    Page<Role> getDataTableByCriteriaQuery(PageRequest pageRequest, List<UrlBuilder.PropertyFilter> pfList);
 
     Role findById(Integer id);
 
     void update(Role roles);
 
-    void delete(Long id);
+    void delete(Integer id);
 
     void batchDelete(Integer[] ids);
 

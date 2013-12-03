@@ -17,7 +17,7 @@ import javax.validation.Valid;
 /**
  * @className:LoginContrlloer
  * @classDescription:
- * @author:Administrator
+ * @author:luowei
  * @createTime:12-5-15
  */
 @Controller

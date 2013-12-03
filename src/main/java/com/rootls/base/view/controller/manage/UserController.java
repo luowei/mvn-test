@@ -1,8 +1,6 @@
 package com.rootls.base.view.controller.manage;
 
 import com.rootls.base.bean.Constants;
-import com.rootls.base.bean.DataTable;
-import com.rootls.base.bean.PageRequest;
 import com.rootls.base.model.User;
 import com.rootls.base.service.RoleService;
 import com.rootls.base.service.UserService;
@@ -13,6 +11,8 @@ import com.rootls.base.view.groups.BatchDeleteGroup;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -32,7 +32,7 @@ import static com.rootls.base.util.UrlBuilder.PropertyFilter;
 /**
  * @className:UserManageController
  * @classDescription:
- * @author:Administrator
+ * @author:luowei
  * @createTime:12-5-17
  */
 @Controller
@@ -83,37 +83,22 @@ public class UserController extends BaseController {
             page = Math.min(totalPages, page);
         }
 
-        PageRequest pageRequest = new PageRequest(page, Constants.DEFAULT_PAGE_SIZE, orders);
-
+        //构建pagerequest对象
+        PageRequest pageRequest = new PageRequest(page - 1, pageSize, getSort(orders) );
 
         //添加搜索条件
         List<PropertyFilter> pfList = new ArrayList<PropertyFilter>() ;
         pfList.add(new PropertyFilter("username", username, UrlBuilder.Type.LIKE));
 //        pfList.add(new PropertyFilter("createTime", startTime, Type.GE));
 
-        DataTable<User> dataTable = userService.getDataTableByCriteriaQuery(pageRequest, pfList);
-        model.addAttribute("dataTable", dataTable);
-
-        //添加索引号
-        model.addAttribute("index", pageRequest.getOffset());
-
+        Page<User> resultPage = userService.getDataTableByCriteriaQuery(pageRequest, pfList);
 
         //添加分页条件
         List<UrlBuilder.PropertyFilter> searchConditionList = new ArrayList<UrlBuilder.PropertyFilter>();
         searchConditionList.add(new PropertyFilter("searchKey1", username));
         searchConditionList.add(new PropertyFilter("startTime", startTime == null ? null : new DateTime(startTime).toString("yyyy-MM-dd")));
-        String conditionUrl = UrlBuilder.getUrl("/manage/user/list", searchConditionList);
-        String conditionAndOrdersUrl = UrlBuilder.getOrdersUrl(conditionUrl, orders);
-        dataTable.setConditionUrl(request.getContextPath()+conditionAndOrdersUrl);
 
-        //添加排序条件
-        model.addAttribute("order", conditionAndOrdersUrl);
-
-
-
-        //添加url到cookie
-        addRediectUrlCookie(request, response, page, conditionUrl);
-
+        addPageInfo(model, request, response, orders, page, pageRequest, resultPage, searchConditionList,"/manage/user/list");
 
         return "/manage/user/list";
     }

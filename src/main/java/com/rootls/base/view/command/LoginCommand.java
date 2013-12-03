@@ -5,7 +5,7 @@ import org.hibernate.validator.constraints.NotBlank;
 /**
  * @className:LoginFormBean
  * @classDescription:
- * @author:Administrator
+ * @author:luowei
  * @createTime:12-5-15
  */
 public class LoginCommand {

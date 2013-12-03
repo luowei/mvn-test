@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * @className:GenericsUtils
  * @classDescription:
- * @author:Administrator
+ * @author:luowei
  * @createTime:12-4-12
  */
 public abstract class GenericsUtils {

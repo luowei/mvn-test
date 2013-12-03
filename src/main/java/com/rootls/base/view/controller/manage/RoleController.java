@@ -1,8 +1,6 @@
 package com.rootls.base.view.controller.manage;
 
 import com.rootls.base.bean.Constants;
-import com.rootls.base.bean.DataTable;
-import com.rootls.base.bean.PageRequest;
 import com.rootls.base.model.Role;
 import com.rootls.base.service.PermissionService;
 import com.rootls.base.service.RoleService;
@@ -12,6 +10,8 @@ import com.rootls.base.view.controller.BaseController;
 import com.rootls.base.view.groups.BatchDeleteGroup;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -32,7 +32,7 @@ import static com.rootls.base.util.UrlBuilder.Type;
 /**
  * @className:RoleManageController
  * @classDescription:
- * @author:Administrator
+ * @author:luowei
  * @createTime:12-5-23
  */
 @Controller
@@ -46,9 +46,6 @@ public class RoleController extends BaseController {
 
     @Autowired
     private PermissionService permissionService;
-
-
-
 
     /**
      * 分页列出所有菜单
@@ -78,35 +75,22 @@ public class RoleController extends BaseController {
             page = Math.min(totalPages, page);
         }
 
-        PageRequest pageRequest = new PageRequest(page, Constants.DEFAULT_PAGE_SIZE, orders);
-
+        //构建pagerequest对象
+        PageRequest pageRequest = new PageRequest(page - 1, pageSize, getSort(orders) );
 
         //添加搜索条件
         List<UrlBuilder.PropertyFilter> pfList = new ArrayList<UrlBuilder.PropertyFilter>() ;
         pfList.add(new PropertyFilter("name", roleName, Type.LIKE));
         pfList.add(new PropertyFilter("createTime", startTime, Type.GE));
 
-        DataTable<Role> dataTable = roleService.getDataTableByCriteriaQuery(pageRequest, pfList);
-        model.addAttribute("dataTable", dataTable);
-
-        //添加索引号
-        model.addAttribute("index", pageRequest.getOffset());
-
+        Page<Role> resultPage = roleService.getDataTableByCriteriaQuery(pageRequest, pfList);
 
         //添加分页条件
         List<UrlBuilder.PropertyFilter> searchConditionList = new ArrayList<UrlBuilder.PropertyFilter>();
         searchConditionList.add(new PropertyFilter("searchKey1", roleName));
         searchConditionList.add(new PropertyFilter("startTime", startTime == null ? null : new DateTime(startTime).toString("yyyy-MM-dd")));
-        String conditionUrl = UrlBuilder.getUrl("/manage/role/list", searchConditionList);
-        String conditionAndOrdersUrl = UrlBuilder.getOrdersUrl(conditionUrl, orders);
-        dataTable.setConditionUrl(request.getContextPath()+conditionAndOrdersUrl);
 
-        //添加排序条件
-        model.addAttribute("order", conditionAndOrdersUrl);
-
-
-        //添加url到cookie
-        addRediectUrlCookie(request, response, page, conditionUrl);
+        addPageInfo(model, request, response, orders, page, pageRequest, resultPage, searchConditionList,"/manage/role/list");
 
         return "/manage/role/list";
     }
@@ -178,7 +162,7 @@ public class RoleController extends BaseController {
      * @return
      */
     @RequestMapping(value = "/delete/{id}")
-    public String delete(@PathVariable Long id,
+    public String delete(@PathVariable Integer id,
                          RedirectAttributes redirectAttrs,
                          @CookieValue(Constants.REDIRECT_URL) String redirectUrl) {
 

@@ -14,18 +14,18 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "role")
-public class Role {
-    private Integer id;
-
-    @javax.persistence.Column(name = "id", nullable = false, insertable = true, updatable = true, length = 10, precision = 0)
-    @Id
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
+public class Role extends IdEntity {
+//    private Integer id;
+//
+//    @javax.persistence.Column(name = "id", nullable = false, insertable = true, updatable = true, length = 10, precision = 0)
+//    @Id
+//    public Integer getId() {
+//        return id;
+//    }
+//
+//    public void setId(Integer id) {
+//        this.id = id;
+//    }
 
     private String name;
 

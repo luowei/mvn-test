@@ -1,6 +1,7 @@
-package com.rootls.base.repository.custom;
+package com.rootls.base.repository.custom.impl;
 
 import com.rootls.base.model.Menu;
+import com.rootls.base.repository.custom.MenuRepositoryCustom;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -52,7 +53,7 @@ public class MenuRepositoryCustomImpl extends BaseRepositoryImpl<Menu> implement
 //        Menu mnu=em.find(Menu.class, 1);
         em.clear(); //把实体管理器中的所有的实体都变成游离状态
 //        em.remove(mnu); //操作的也必须是持久化状态，或者托管状态的对象
-//        mnu.setName("tazi22");
+//        mnu.setName("aaaaa");
         em.merge(menu);
         em.getTransaction().commit();
         em.close();

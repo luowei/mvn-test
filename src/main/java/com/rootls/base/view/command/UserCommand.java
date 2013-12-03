@@ -3,7 +3,7 @@ package com.rootls.base.view.command;
 /**
  * @className:UserCommand
  * @classDescription:
- * @author:Administrator
+ * @author:luowei
  * @createTime:12-5-18
  */
 public class UserCommand extends BaseCommand{

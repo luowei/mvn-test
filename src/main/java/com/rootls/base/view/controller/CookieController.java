@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * User: Administrator
+ * User: luowei
  * Date: 12-4-30
  * Time: 下午4:07
  */

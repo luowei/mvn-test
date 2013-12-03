@@ -12,7 +12,7 @@ import java.io.IOException;
 /**
  * @className:PageTagSupport
  * @classDescription:
- * @author:Administrator
+ * @author:luowei
  * @createTime:12-4-13
  */
 public class PageTagSupport extends SimpleTagSupport {

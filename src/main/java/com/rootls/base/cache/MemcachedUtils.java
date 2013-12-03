@@ -11,7 +11,7 @@ import java.io.IOException;
 /**
  * @className:MemcachedUtils
  * @classDescription:
- * @author:Administrator
+ * @author:luowei
  * @createTime:12-6-13
  */
 public class MemcachedUtils {

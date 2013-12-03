@@ -11,4 +11,5 @@ import com.rootls.base.model.IdEntity;
  */
 public interface BaseRepository<T extends IdEntity> {
 
+    void batchDelete(Integer[] ids, Class<T> menuClass);
 }

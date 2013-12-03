@@ -1,10 +1,10 @@
 package com.rootls.base.service;
 
-import com.rootls.base.bean.DataTable;
-import com.rootls.base.bean.PageRequest;
 import com.rootls.base.model.Permission;
 import com.rootls.base.model.Role;
 import com.rootls.base.util.UrlBuilder;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 
 import java.util.List;
 
@@ -16,7 +16,7 @@ import java.util.List;
  * To change this template use File | Settings | File Templates.
  */
 public interface PermissionService {
-    DataTable<Permission> getDataTableByCriteriaQuery(PageRequest pageRequest, List<UrlBuilder.PropertyFilter> pfList);
+    Page<Permission> getDataTableByCriteriaQuery(PageRequest pageRequest, List<UrlBuilder.PropertyFilter> pfList);
 
     Permission findById(Integer id);
 
@@ -30,5 +30,5 @@ public interface PermissionService {
 
     String getZTreeNodes(Role role);
 
-    void assignOrRemovePermissionsForRole(Integer roleId, Integer[] ids1, Integer[] ids2, boolean unchecked);
+    void assignOrRemovePermissionsForRole(Integer roleId, Integer[] originCheckedIds, Integer[] checkedIds, boolean unchecked);
 }

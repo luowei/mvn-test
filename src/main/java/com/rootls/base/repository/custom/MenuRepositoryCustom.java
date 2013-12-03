@@ -20,4 +20,5 @@ public interface MenuRepositoryCustom extends BaseRepository<Menu>{
     List<Menu> getSubMenu(int id);
 
     void update(Menu menu);
+
 }

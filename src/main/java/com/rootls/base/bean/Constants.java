@@ -1,7 +1,7 @@
 package com.rootls.base.bean;
 
 /**
- * User: Administrator
+ * User: luowei
  * Date: 12-5-1
  * Time: 下午5:19
  */

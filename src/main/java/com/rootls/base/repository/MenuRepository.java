@@ -27,9 +27,8 @@ public interface MenuRepository  extends PagingAndSortingRepository<Menu,Integer
 
     List<Menu> findByCreateTimeBetween(Timestamp beginTime,Timestamp endTime);
 
-    @SuppressWarnings("JpaQlInspection")
     @Modifying  @Transactional
-    @Query(value = "insert into M (id,name,create_time,sequence, parent_id) " +
+    @Query(value = "insert into menu (id,name,create_time,sequence, parent_id) " +
             " values(?1,?2,'2013-04-20 18:58:58','100',0)",nativeQuery = true)
     int add(Integer id,String name);
 

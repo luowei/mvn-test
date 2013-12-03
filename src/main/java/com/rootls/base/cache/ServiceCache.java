@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * @className:ServiceCache
  * @classDescription:
- * @author:Administrator
+ * @author:luowei
  * @createTime:12-6-12
  */
 public class ServiceCache extends SpyMemcachedManager implements CacheManager, Serializable {

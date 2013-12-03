@@ -11,7 +11,7 @@ import java.util.Map;
 /**
  * @className:CacheManager
  * @classDescription:
- * @author:Administrator
+ * @author:luowei
  * @createTime:12-6-12
  */
 public interface CacheManager {

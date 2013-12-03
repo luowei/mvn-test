@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * @className:PageRequest
  * @classDescription:
- * @author:Administrator
+ * @author:luowei
  * @createTime:12-4-12
  */
 public class PageRequest implements Serializable {

@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
  * @classDescription: A Spring MVC interceptor that adds the currentUser into the request as a request attribute
  * before the JSP is rendered.  This operation is assumed to be fast because the User should be
  * cached in the Hibernate second-level cache.
- * @author:Administrator
+ * @author:luowei
  * @createTime:12-5-16
  */
 public class CurrentUserInterceptor extends HandlerInterceptorAdapter {

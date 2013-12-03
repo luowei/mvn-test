@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 /**
  * @className:SpringServiceUtils
  * @classDescription:
- * @author:Administrator
+ * @author:luowei
  * @createTime:12-6-13
  */
 @Component
