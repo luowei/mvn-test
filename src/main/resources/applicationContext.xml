@@ -14,9 +14,12 @@
 
 
     <!--导入数据源配置-->
-    <!--<import resource="classpath:spring/applicationContext-dataSource.xml"/>-->
+    <import resource="classpath:spring/applicationContext-dataSource.xml"/>
 
     <!--导入jpa配置-->
     <import resource="classpath:spring/applicationContext-jpa.xml"/>
+
+    <!-- 导入shiro配置 -->
+    <import resource="classpath:spring/applicationContext-shiro.xml"/>
 
 </beans>

@@ -14,17 +14,15 @@ import java.util.Set;
 @Entity
 @Table(name = "user")
 public class User extends IdEntity{
-//    private Integer id;
-//
-//    @javax.persistence.Column(name = "id", nullable = false, insertable = true, updatable = true, length = 10, precision = 0)
-//    @Id //@GeneratedValue(strategy = GenerationType.IDENTITY)
-//    public Integer getId() {
-//        return id;
-//    }
-//
-//    public void setId(Integer id) {
-//        this.id = id;
-//    }
+
+    public User() {
+    }
+
+    public User(Integer id,String name, String password) {
+        this.id = id;
+        this.name = name;
+        this.password = password;
+    }
 
     private String name;
 
@@ -77,3 +75,25 @@ public class User extends IdEntity{
     }
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

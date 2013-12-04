@@ -15,17 +15,6 @@ import java.util.List;
 @Entity
 @Table(name = "menu")
 public class Menu extends IdEntity {
-//    private Integer id;
-
-//    @javax.persistence.Column(name = "id", nullable = false, insertable = true, updatable = true, length = 10, precision = 0)
-//    @Id
-//    public Integer getId() {
-//        return id;
-//    }
-//
-//    public void setId(Integer id) {
-//        this.id = id;
-//    }
 
     private String name;
 

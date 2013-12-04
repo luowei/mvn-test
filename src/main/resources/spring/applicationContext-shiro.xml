@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/util
+		http://www.springframework.org/schema/util/spring-util-3.0.xsd">
+
+    <!-- Spring AOP auto-proxy creation (required to support Shiro annotations) -->
+    <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"/>
+
+
+    <!-- Shiro's main business-tier object for web-enabled applications
+    (use DefaultSecurityManager instead when there is no web environment)-->
+    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+        <!--<property name="cacheManager" ref="cacheManager" />-->
+        <property name="realm" ref="myJdbcRelam" />
+        <property name="sessionManager" ref="sessionManager" />
+    </bean>
+
+
+    <!-- Post processor that automatically invokes init() and destroy() methods -->
+    <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
+
+
+    <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+        <property name="securityManager" ref="securityManager" />
+        <property name="loginUrl" value="/login" />
+        <property name="successUrl" value="/" />
+        <property name="unauthorizedUrl" value="/unauthorize" />
+        <property name="filters">
+            <util:map>
+                <entry key="authc">
+                    <bean class="org.apache.shiro.web.filter.authc.PassThruAuthenticationFilter"/>
+                </entry>
+            </util:map>
+        </property>
+        <property name="filterChainDefinitions">
+            <value>
+                /resources/** = anon
+                /loginProcess = anon
+                /logout = logout
+                /pwdGen = anon
+                /generatePassword = anon
+                /hello = authc,roles[user]
+                /admin/** = authc, roles[admin]
+                /** = authc
+            </value>
+        </property>
+    </bean>
+
+    <!-- Shiro1.2 new feature -->
+    <bean id="logout" class="org.apache.shiro.web.filter.authc.LogoutFilter">
+        <property name="redirectUrl" value="/" />
+    </bean>
+
+
+
+    <bean id="sessionManager" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
+        <property name="sessionDAO" ref="sessionDAO" />
+    </bean>
+
+    <bean id="sessionDAO" class="org.apache.shiro.session.mgt.eis.EnterpriseCacheSessionDAO">
+        <!--<property name="cacheManager" ref="cacheManager" />-->
+        <property name="activeSessionsCacheName" value="shiro-activeSessionCache" />
+    </bean>
+
+    <!--<bean id="cacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">-->
+        <!--<property name="cacheManagerConfigFile" value="classpath:ehcache-shiro.xml" />-->
+    <!--</bean>-->
+
+    <bean id="myJdbcRelam" class="com.rootls.base.bean.SaltAwareJdbcRealm">
+        <!--<property name="dataSource" ref="dataSource" />-->
+        <property name="jdbcTemplate" ref="jdbcTemplate"/>
+        <property name="name" value="myJdbcRelam" />
+        <property name="credentialsMatcher" ref="passwordMatcher" />
+    </bean>
+
+    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+        <property name="dataSource" value="dataSource"/>
+    </bean>
+    <bean id="passwordMatcher" class="org.apache.shiro.authc.credential.PasswordMatcher">
+        <property name="passwordService" ref="passwordService" />
+    </bean>
+
+    <bean id="passwordService" class="org.apache.shiro.authc.credential.DefaultPasswordService" />
+
+
+
+</beans>

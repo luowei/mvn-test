@@ -2,6 +2,9 @@ package com.rootls.base.model;
 
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import java.io.Serializable;
 
@@ -14,15 +17,15 @@ import java.io.Serializable;
  */
 @MappedSuperclass
 public abstract class IdEntity extends AbstractPersistable<Integer> implements Serializable {
-////    @Id
-////    @GeneratedValue(strategy = GenerationType.IDENTITY)
-////    protected Integer id;
-////
-////    public Integer getId() {
-////        return id;
-////    }
-////
-////    public void setId(Long id) {
-////        super.setId(id);
-////    }
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    protected Integer id;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.setId(id);
+    }
 }

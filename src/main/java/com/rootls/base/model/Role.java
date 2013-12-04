@@ -15,17 +15,14 @@ import java.util.Set;
 @Entity
 @Table(name = "role")
 public class Role extends IdEntity {
-//    private Integer id;
-//
-//    @javax.persistence.Column(name = "id", nullable = false, insertable = true, updatable = true, length = 10, precision = 0)
-//    @Id
-//    public Integer getId() {
-//        return id;
-//    }
-//
-//    public void setId(Integer id) {
-//        this.id = id;
-//    }
+
+    public Role() {
+    }
+
+    public Role(Integer id, String name) {
+        this.id = id;
+        this.name = name;
+    }
 
     private String name;
 
@@ -62,6 +59,8 @@ public class Role extends IdEntity {
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
     }
+
+
 
     private Set<User> users = new HashSet<User>();
 

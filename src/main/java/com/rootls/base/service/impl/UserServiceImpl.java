@@ -5,6 +5,7 @@ import com.rootls.base.repository.UserRepository;
 import com.rootls.base.service.UserService;
 import com.rootls.base.util.DynamicSpecifications;
 import com.rootls.base.util.UrlBuilder;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
@@ -28,7 +29,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getCurrentUser() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        final Integer currentUserId = (Integer) SecurityUtils.getSubject().getPrincipal();
+
+        if( currentUserId != null ) {
+            return userRepository.findById(currentUserId);
+        }
+
+        return null;
     }
 
     @Override

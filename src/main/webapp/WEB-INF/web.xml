@@ -9,7 +9,7 @@
     <!-- load spring configuration -->
     <context-param>
         <param-name>contextConfigLocation</param-name>
-        <param-value>classpath:spring/applicationContext-root.xml</param-value>
+        <param-value>classpath:applicationContext.xml</param-value>
     </context-param>
 
     <!-- load log4j configuration -->
@@ -96,7 +96,7 @@
     
     <servlet>
         <servlet-name>testServlet</servlet-name>
-        <servlet-class>com.ttpod.demo.view.TestServlet</servlet-class>
+        <servlet-class>com.rootls.base.view.TestServlet</servlet-class>
     </servlet>
 
 

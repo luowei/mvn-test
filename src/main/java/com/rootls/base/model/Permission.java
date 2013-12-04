@@ -1,8 +1,8 @@
 package com.rootls.base.model;
 
-import javax.persistence.Basic;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created with IntelliJ IDEA.
@@ -13,23 +13,18 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "permission")
-public class Permission extends IdEntity implements Cloneable{
+public class Permission extends IdEntity implements Cloneable {
+
     private boolean checked;
     private boolean open;
-//    private Integer id;
-//
-//    @javax.persistence.Column(name = "id", nullable = false, insertable = true, updatable = true, length = 10, precision = 0)
-//    @Id
-//    public Integer getId() {
-//        return id;
-//    }
-//
-//    public void setId(Integer id) {
-//        this.id = id;
-//    }
-
 
     public Permission() {
+    }
+
+    public Permission(Integer id, String description, Integer permissionGroupId) {
+        this.id = id;
+        this.description = description;
+        this.permissionGroupId = permissionGroupId;
     }
 
     public Permission(String description, Integer permissionGroupId) {
@@ -71,6 +66,17 @@ public class Permission extends IdEntity implements Cloneable{
 
     public void setPermissionGroupId(Integer permissionGroupId) {
         this.permissionGroupId = permissionGroupId;
+    }
+
+    private Set<Role> roles = new HashSet<Role>();
+
+    @ManyToMany(mappedBy = "permissions")
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> users) {
+        this.roles = roles;
     }
 
     @Override
