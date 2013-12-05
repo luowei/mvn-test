@@ -19,22 +19,22 @@ public class User extends IdEntity{
     public User() {
     }
 
-    public User(Integer id,String name, String password) {
+    public User(Integer id,String username, String password) {
         this.id = id;
-        this.name = name;
+        this.username = username;
         this.password = password;
     }
 
     @javax.persistence.Column(name = "username", nullable = false, insertable = true, updatable = true, length = 100, precision = 0)
     @Basic
-    private String name;
+    private String username;
 
-    public String getName() {
-        return name;
+    public String getUsername() {
+        return username;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUsername(String name) {
+        this.username = name;
     }
 
     @javax.persistence.Column(name = "password", nullable = false, insertable = true, updatable = true, length = 92, precision = 0)

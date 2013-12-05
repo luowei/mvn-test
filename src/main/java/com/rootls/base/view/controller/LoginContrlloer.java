@@ -58,8 +58,6 @@ public class LoginContrlloer {
             System.out.println(loginCommand.isRememberMe());
             SecurityUtils.getSubject().login(token);
 
-
-
         } catch (AuthenticationException e) {
             logger.error("登录失败", e);
             return "redirect:/login?error=1";

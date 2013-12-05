@@ -26,6 +26,7 @@ import java.util.Date;
 import java.util.List;
 
 import static com.rootls.base.util.UrlBuilder.PropertyFilter;
+import static org.apache.commons.lang3.StringUtils.isNotBlank;
 
 /**
  * User: luowei
@@ -73,17 +74,19 @@ public class MenuController extends BaseController {
         PageRequest pageRequest = new PageRequest(page - 1, pageSize, getSort(orders) );
 
 
-        //构建查询条件
+        //构建查询条件、查询条件
         List<UrlBuilder.PropertyFilter> pfList = new ArrayList<UrlBuilder.PropertyFilter>();
+        List<UrlBuilder.PropertyFilter> searchConditionList = new ArrayList<UrlBuilder.PropertyFilter>();
+        if (isNotBlank(menuName)) {
         pfList.add(new PropertyFilter("name", menuName, UrlBuilder.Type.LIKE));
-        pfList.add(new PropertyFilter("createTime", startTime, UrlBuilder.Type.GE));
+            searchConditionList.add(new PropertyFilter("searchKey1", menuName));
+        }
+        if(startTime!=null){
+            pfList.add(new PropertyFilter("createTime", startTime, UrlBuilder.Type.GE));
+            searchConditionList.add(new PropertyFilter("startTime", startTime == null ? null : new DateTime(startTime).toString("yyyy-MM-dd")));
+        }
 
         Page<Menu> resultPage = menuService.getPageByCriteriaQuery(pageRequest, pfList);
-
-        //添加返回的查询条件
-        List<UrlBuilder.PropertyFilter> searchConditionList = new ArrayList<UrlBuilder.PropertyFilter>();
-        searchConditionList.add(new PropertyFilter("searchKey1", menuName));
-        searchConditionList.add(new PropertyFilter("startTime", startTime == null ? null : new DateTime(startTime).toString("yyyy-MM-dd")));
 
         addPageInfo(model, request, response, orders, page, pageRequest, resultPage, searchConditionList,"/manage/menu/list");
 

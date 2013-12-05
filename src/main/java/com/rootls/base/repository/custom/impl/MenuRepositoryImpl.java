@@ -31,9 +31,10 @@ public class MenuRepositoryImpl extends BaseRepositoryImpl<Menu> implements Menu
     public Menu getFirstSubMenu() {
 
         String ql = "select m from Menu m where m.parentId=? order by m.sequence asc";
-        Menu menu = em.createQuery(ql, Menu.class).setParameter(0, 0).setFirstResult(0).setMaxResults(1).getSingleResult();
+        Menu menu = em.createQuery(ql, Menu.class)
+                .setParameter(1, 0).setFirstResult(0).setMaxResults(1).getSingleResult();
         if (menu != null) {
-            List<Menu> subMenus = em.createQuery(ql, Menu.class).setParameter(0, 0).getResultList();
+            List<Menu> subMenus = em.createQuery(ql, Menu.class).setParameter(1, 0).getResultList();
             menu.setSubMenus(subMenus);
         }
         return menu;
@@ -42,7 +43,8 @@ public class MenuRepositoryImpl extends BaseRepositoryImpl<Menu> implements Menu
     @Override
     public List<Menu> getSubMenu(int id) {
         String ql = "select m from Menu m where m.parentId=? order by m.sequence asc";
-        List<Menu> subMenus = em.createQuery(ql, Menu.class).setParameter(0, id).getResultList();
+        List<Menu> subMenus = em.createQuery(ql, Menu.class)
+                .setParameter(1, id).getResultList();
         return subMenus;
     }
 

@@ -28,6 +28,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import static org.apache.commons.lang3.StringUtils.isNotBlank;
+
 /**
  * @className:PermissionsController
  * @classDescription:
@@ -44,6 +46,7 @@ public class PermissionsController extends BaseController {
 
     /**
      * 分页列出所有权限
+     *
      * @param baseCommand
      * @param model
      * @param request
@@ -65,37 +68,42 @@ public class PermissionsController extends BaseController {
         int pageSize = Constants.DEFAULT_PAGE_SIZE;
         int totalPages = (int) (totalElements + pageSize - 1) / pageSize;
         int page = getPageNoFromString(pageStr);
-        if(model.containsAttribute(Constants.ADD_FLAG)){
+        if (model.containsAttribute(Constants.ADD_FLAG)) {
             page = totalPages;
-        }else {
+        } else {
             page = Math.min(totalPages, page);
         }
 
         //构建pagerequest对象
-        PageRequest pageRequest = new PageRequest(page - 1, pageSize, getSort(orders) );
+        PageRequest pageRequest = new PageRequest(page - 1, pageSize, getSort(orders));
 
-        //添加搜索条件
-        List<UrlBuilder.PropertyFilter> pfList = new ArrayList<UrlBuilder.PropertyFilter>() ;
-        pfList.add(new UrlBuilder.PropertyFilter("permission", permission, UrlBuilder.Type.LIKE));
-        pfList.add(new UrlBuilder.PropertyFilter("description", description, UrlBuilder.Type.LIKE));
-
-        Page<Permission> resultPage= permissionService.getDataTableByCriteriaQuery(pageRequest, pfList);
-
-        //添加分页条件
+        //添加搜索条件、分页条件
+        List<UrlBuilder.PropertyFilter> pfList = new ArrayList<UrlBuilder.PropertyFilter>();
         List<UrlBuilder.PropertyFilter> searchConditionList = new ArrayList<UrlBuilder.PropertyFilter>();
-        searchConditionList.add(new UrlBuilder.PropertyFilter("searchKey1", permission));
-        searchConditionList.add(new UrlBuilder.PropertyFilter("searchKey2", description));
-        searchConditionList.add(new UrlBuilder.PropertyFilter("startTime", startTime == null ? null : new DateTime(startTime).toString("yyyy-MM-dd")));
+        if (isNotBlank(permission)) {
+            pfList.add(new UrlBuilder.PropertyFilter("permission", permission, UrlBuilder.Type.LIKE));
+            searchConditionList.add(new UrlBuilder.PropertyFilter("searchKey1", permission));
+        }
+        if (isNotBlank(permission)) {
+            pfList.add(new UrlBuilder.PropertyFilter("description", description, UrlBuilder.Type.LIKE));
+            searchConditionList.add(new UrlBuilder.PropertyFilter("searchKey2", description));
+        }
+        if (startTime != null) {
+            pfList.add(new UrlBuilder.PropertyFilter("createTime", startTime, UrlBuilder.Type.GE));
+            searchConditionList.add(new UrlBuilder.PropertyFilter("startTime", startTime == null ? null : new DateTime(startTime).toString("yyyy-MM-dd")));
+        }
 
-        addPageInfo(model, request, response, orders, page, pageRequest, resultPage, searchConditionList,"/manage/permissions/list");
+        Page<Permission> resultPage = permissionService.getDataTableByCriteriaQuery(pageRequest, pfList);
+
+        addPageInfo(model, request, response, orders, page, pageRequest, resultPage, searchConditionList, "/manage/permissions/list");
 
         return "/manage/permissions/list";
     }
 
 
-
     /**
      * 编辑权限
+     *
      * @param id
      * @param model
      * @return
@@ -115,6 +123,7 @@ public class PermissionsController extends BaseController {
 
     /**
      * 更新权限
+     *
      * @param permission
      * @param result
      * @param redirectAttrs
@@ -174,6 +183,7 @@ public class PermissionsController extends BaseController {
 
     /**
      * 批量删除角色
+     *
      * @param baseCommand
      * @param result
      * @param redirectAttrs

@@ -28,6 +28,7 @@ import java.util.List;
 
 import static com.rootls.base.util.UrlBuilder.PropertyFilter;
 import static com.rootls.base.util.UrlBuilder.Type;
+import static org.apache.commons.lang3.StringUtils.isNotBlank;
 
 /**
  * @className:RoleManageController
@@ -49,6 +50,7 @@ public class RoleController extends BaseController {
 
     /**
      * 分页列出所有菜单
+     *
      * @param baseCommand
      * @param model
      * @param request
@@ -69,36 +71,38 @@ public class RoleController extends BaseController {
         int pageSize = Constants.DEFAULT_PAGE_SIZE;
         int totalPages = (int) (totalElements + pageSize - 1) / pageSize;
         int page = getPageNoFromString(pageStr);
-        if(model.containsAttribute(Constants.ADD_FLAG)){
+        if (model.containsAttribute(Constants.ADD_FLAG)) {
             page = totalPages;
-        }else {
+        } else {
             page = Math.min(totalPages, page);
         }
 
         //构建pagerequest对象
-        PageRequest pageRequest = new PageRequest(page - 1, pageSize, getSort(orders) );
+        PageRequest pageRequest = new PageRequest(page - 1, pageSize, getSort(orders));
 
         //添加搜索条件
-        List<UrlBuilder.PropertyFilter> pfList = new ArrayList<UrlBuilder.PropertyFilter>() ;
-        pfList.add(new PropertyFilter("name", roleName, Type.LIKE));
-        pfList.add(new PropertyFilter("createTime", startTime, Type.GE));
+        List<UrlBuilder.PropertyFilter> pfList = new ArrayList<UrlBuilder.PropertyFilter>();
+        List<UrlBuilder.PropertyFilter> searchConditionList = new ArrayList<UrlBuilder.PropertyFilter>();
+        if (isNotBlank(roleName)) {
+            pfList.add(new PropertyFilter("name", roleName, Type.LIKE));
+            searchConditionList.add(new PropertyFilter("searchKey1", roleName));
+        }
+        if (startTime != null) {
+            pfList.add(new PropertyFilter("createTime", startTime, Type.GE));
+            searchConditionList.add(new PropertyFilter("startTime", startTime == null ? null : new DateTime(startTime).toString("yyyy-MM-dd")));
+        }
 
         Page<Role> resultPage = roleService.getDataTableByCriteriaQuery(pageRequest, pfList);
 
-        //添加分页条件
-        List<UrlBuilder.PropertyFilter> searchConditionList = new ArrayList<UrlBuilder.PropertyFilter>();
-        searchConditionList.add(new PropertyFilter("searchKey1", roleName));
-        searchConditionList.add(new PropertyFilter("startTime", startTime == null ? null : new DateTime(startTime).toString("yyyy-MM-dd")));
-
-        addPageInfo(model, request, response, orders, page, pageRequest, resultPage, searchConditionList,"/manage/role/list");
+        addPageInfo(model, request, response, orders, page, pageRequest, resultPage, searchConditionList, "/manage/role/list");
 
         return "/manage/role/list";
     }
 
 
-
     /**
      * 编辑角色
+     *
      * @param id
      * @param model
      * @return
@@ -119,6 +123,7 @@ public class RoleController extends BaseController {
 
     /**
      * 更新角色
+     *
      * @param role
      * @param result
      * @param redirectAttrs
@@ -178,6 +183,7 @@ public class RoleController extends BaseController {
 
     /**
      * 批量删除角色
+     *
      * @param baseCommand
      * @param result
      * @param redirectAttrs
@@ -202,16 +208,18 @@ public class RoleController extends BaseController {
 
     /**
      * 显示角色添加页面
+     *
      * @param model
      */
     @RequestMapping(value = "/add", method = RequestMethod.GET)
-    public void showRoleAddPage(Model model){
+    public void showRoleAddPage(Model model) {
         model.addAttribute("role", new Role());
     }
 
 
     /**
      * 添加角色
+     *
      * @param role
      * @param result
      * @param redirectAttrs
@@ -221,9 +229,9 @@ public class RoleController extends BaseController {
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public String add(@Valid Role role, BindingResult result,
                       RedirectAttributes redirectAttrs,
-                      @CookieValue(Constants.REDIRECT_URL) String redirectUrl){
+                      @CookieValue(Constants.REDIRECT_URL) String redirectUrl) {
 
-        if(result.hasErrors()){
+        if (result.hasErrors()) {
             return null;
         }
 
@@ -240,13 +248,12 @@ public class RoleController extends BaseController {
 
 
     /**
-     *
      * @param id
      * @param model
      * @return
      */
     @RequestMapping(value = "/assignPermissionsPre/{id}", method = RequestMethod.GET)
-    public String assignPermissionsForRolePre(@PathVariable Integer id, Model model){
+    public String assignPermissionsForRolePre(@PathVariable Integer id, Model model) {
 
         Role role = roleService.findById(id);
 
@@ -260,6 +267,7 @@ public class RoleController extends BaseController {
 
     /**
      * 为角色分配权限
+     *
      * @param roleId
      * @param ids1
      * @param ids2
@@ -271,9 +279,9 @@ public class RoleController extends BaseController {
                                     @RequestParam(required = false) Integer[] ids1,
                                     @RequestParam(required = false) Integer[] ids2,
                                     @RequestParam boolean unchecked,
-                                    RedirectAttributes redirectAttrs){
+                                    RedirectAttributes redirectAttrs) {
 
-        if(roleId != null){
+        if (roleId != null) {
             permissionService.assignOrRemovePermissionsForRole(roleId, ids1, ids2, unchecked);
         }
 

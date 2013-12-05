@@ -8,6 +8,7 @@ import com.rootls.base.util.UrlBuilder;
 import com.rootls.base.view.command.UserCommand;
 import com.rootls.base.view.controller.BaseController;
 import com.rootls.base.view.groups.BatchDeleteGroup;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,7 @@ import java.util.Date;
 import java.util.List;
 
 import static com.rootls.base.util.UrlBuilder.PropertyFilter;
+import static org.apache.commons.lang3.StringUtils.isNotBlank;
 
 /**
  * @className:UserManageController
@@ -48,13 +50,14 @@ public class UserController extends BaseController {
 
 
     @ModelAttribute
-    public UserCommand createUserCommand(){
+    public UserCommand createUserCommand() {
         return new UserCommand();
     }
 
 
     /**
      * 分页列出所有用户
+     *
      * @param userCommand
      * @param model
      * @param request
@@ -65,7 +68,7 @@ public class UserController extends BaseController {
     public String list(UserCommand userCommand,
                        Model model,
                        HttpServletRequest request,
-                       HttpServletResponse response){
+                       HttpServletResponse response) {
 
 
         String pageStr = userCommand.getPage();
@@ -77,28 +80,30 @@ public class UserController extends BaseController {
         int pageSize = Constants.DEFAULT_PAGE_SIZE;
         int totalPages = (int) (totalElements + pageSize - 1) / pageSize;
         int page = getPageNoFromString(pageStr);
-        if(model.containsAttribute(Constants.ADD_FLAG)){
+        if (model.containsAttribute(Constants.ADD_FLAG)) {
             page = totalPages;
-        }else {
+        } else {
             page = Math.min(totalPages, page);
         }
 
         //构建pagerequest对象
-        PageRequest pageRequest = new PageRequest(page - 1, pageSize, getSort(orders) );
+        PageRequest pageRequest = new PageRequest(page - 1, pageSize, getSort(orders));
 
-        //添加搜索条件
-        List<PropertyFilter> pfList = new ArrayList<PropertyFilter>() ;
-        pfList.add(new PropertyFilter("username", username, UrlBuilder.Type.LIKE));
-//        pfList.add(new PropertyFilter("createTime", startTime, Type.GE));
+        //添加搜索条件、分页条件
+        List<PropertyFilter> pfList = new ArrayList<PropertyFilter>();
+        List<UrlBuilder.PropertyFilter> searchConditionList = new ArrayList<UrlBuilder.PropertyFilter>();
+        if (isNotBlank(username)) {
+            pfList.add(new PropertyFilter("username", username, UrlBuilder.Type.LIKE));
+            searchConditionList.add(new PropertyFilter("searchKey1", username));
+        }
+        if(startTime!=null){
+            pfList.add(new PropertyFilter("createTime", startTime, UrlBuilder.Type.GE));
+            searchConditionList.add(new PropertyFilter("startTime", startTime == null ? null : new DateTime(startTime).toString("yyyy-MM-dd")));
+        }
 
         Page<User> resultPage = userService.getDataTableByCriteriaQuery(pageRequest, pfList);
 
-        //添加分页条件
-        List<UrlBuilder.PropertyFilter> searchConditionList = new ArrayList<UrlBuilder.PropertyFilter>();
-        searchConditionList.add(new PropertyFilter("searchKey1", username));
-        searchConditionList.add(new PropertyFilter("startTime", startTime == null ? null : new DateTime(startTime).toString("yyyy-MM-dd")));
-
-        addPageInfo(model, request, response, orders, page, pageRequest, resultPage, searchConditionList,"/manage/user/list");
+        addPageInfo(model, request, response, orders, page, pageRequest, resultPage, searchConditionList, "/manage/user/list");
 
         return "/manage/user/list";
     }
@@ -106,15 +111,16 @@ public class UserController extends BaseController {
 
     /**
      * 编辑用户
+     *
      * @param id
      * @param model
      * @return
      */
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
     @RequiresPermissions("user:update")
-    public String edit(@PathVariable Integer id,  Model model){
+    public String edit(@PathVariable Integer id, Model model) {
 
-        model.addAttribute("userCommand",userService.findById(id));
+        model.addAttribute("userCommand", userService.findById(id));
 
         return "/manage/user/edit";
     }
@@ -122,6 +128,7 @@ public class UserController extends BaseController {
 
     /**
      * 更新用户
+     *
      * @param userCommand
      * @param result
      * @return
@@ -131,13 +138,13 @@ public class UserController extends BaseController {
     public String update(@Valid UserCommand userCommand,
                          BindingResult result,
                          RedirectAttributes redirectAttrs,
-                         @CookieValue(Constants.REDIRECT_URL) String redirectUrl){
-        if(result.hasErrors()){
+                         @CookieValue(Constants.REDIRECT_URL) String redirectUrl) {
+        if (result.hasErrors()) {
             return null;
         }
 
         User user = userService.findById(userCommand.getId());
-        user.setName(userCommand.getUsername());
+        user.setUsername(userCommand.getUsername());
         user.setEmail(userCommand.getEmail());
 
         userService.update(user);
@@ -151,6 +158,7 @@ public class UserController extends BaseController {
 
     /**
      * 删除用户
+     *
      * @param id
      * @return
      */
@@ -158,7 +166,7 @@ public class UserController extends BaseController {
     @RequiresPermissions("user:delete")
     public String delete(@PathVariable Integer id,
                          RedirectAttributes redirectAttrs,
-                         @CookieValue(Constants.REDIRECT_URL) String redirectUrl){
+                         @CookieValue(Constants.REDIRECT_URL) String redirectUrl) {
 
         userService.delete(id);
 
@@ -171,6 +179,7 @@ public class UserController extends BaseController {
 
     /**
      * 批量删除用户
+     *
      * @param userCommand
      * @param result
      * @param redirectAttrs
@@ -193,15 +202,15 @@ public class UserController extends BaseController {
     }
 
 
-
     /**
      * 显示角色分配列表
+     *
      * @param id
      * @param model
      * @return
      */
     @RequestMapping("/assignRolesPre/{id}")
-    public String assignRolesForUserPre(@PathVariable Integer id, Model model){
+    public String assignRolesForUserPre(@PathVariable Integer id, Model model) {
 
         model.addAttribute("roleList1", roleService.getRolesForSelect1(id));
         model.addAttribute("roleList2", roleService.getRolesForSelect2(id));
@@ -213,6 +222,7 @@ public class UserController extends BaseController {
 
     /**
      * 为用户分配角色
+     *
      * @param userId
      * @param ids1
      * @param ids2
@@ -223,7 +233,7 @@ public class UserController extends BaseController {
     public String assignRolesForUser(@RequestParam Integer userId,
                                      @RequestParam(required = false) Integer[] ids1,
                                      @RequestParam(required = false) Integer[] ids2,
-                                     RedirectAttributes redirectAttrs){
+                                     RedirectAttributes redirectAttrs) {
 
         if (userId != null) {
             roleService.assignOrRemoveRolesForUser(userId, ids1, ids2);

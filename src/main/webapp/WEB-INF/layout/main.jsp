@@ -107,7 +107,7 @@
 <body>
 <div class="header">
     <div class="header_inner">
-        <h1 id="logo" style="text-indent:-9999px;">天天动听用户平台管理系统</h1>
+        <h1 id="logo" style="text-indent:-9999px;">用户平台管理系统</h1>
         <div id="login_bar">
             <shiro:user>
                 您好,欢迎<strong>${currentUser.username}</strong>登录<a href="<c:url value="/logout" />">注销</a>

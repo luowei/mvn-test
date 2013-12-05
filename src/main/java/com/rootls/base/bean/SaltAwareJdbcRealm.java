@@ -131,7 +131,7 @@ public class SaltAwareJdbcRealm extends AuthorizingRealm {
                 new RowMapper<Role>() {
                     @Override
                     public Role mapRow(ResultSet rs, int rowNum) throws SQLException {
-                        String name = rs.getString("name");
+                        String name = rs.getString("role_name");
                         Role role = new Role(rs.getInt("id"), name);
                         roleNames.add(name);
                         roleSet.add(role);
