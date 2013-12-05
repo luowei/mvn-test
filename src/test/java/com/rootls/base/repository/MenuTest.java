@@ -68,7 +68,7 @@ public class MenuTest {
         List<Menu> menus = menuRepository.findByCreateTimeBetween(t1, t2);
 
         logger.info("======= menus size:"+menus.size());
-        assertEquals(5, menus.size());
+        assertEquals(2, menus.size());
         for(Menu menu:menus){
             if(menu.getName().equals("用户管理")){
                 assertTrue(true);

@@ -11,7 +11,8 @@ import com.rootls.base.repository.custom.UserRepositoryCustom;
  * Time: 上午11:17
  * To change this template use File | Settings | File Templates.
  */
-public class UserRepositoryCustomImpl extends BaseRepositoryImpl<User> implements UserRepositoryCustom {
+//@Resource
+public class UserRepositoryImpl extends BaseRepositoryImpl<User> implements UserRepositoryCustom {
 
     @Override
     public void deleteUserRole(Integer userId, Integer roleId) {

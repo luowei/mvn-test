@@ -9,6 +9,7 @@ import com.rootls.base.model.IdEntity;
  * Time: 上午9:44
  * To change this template use File | Settings | File Templates.
  */
+//@NoRepositoryBean
 public interface BaseRepository<T extends IdEntity> {
 
     void batchDelete(Integer[] ids, Class<T> menuClass);

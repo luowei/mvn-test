@@ -12,11 +12,28 @@
         <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
     </context:component-scan>
 
+    <context:property-placeholder location="classpath:spring/dataSource.properties"/>
 
-    <!--导入数据源配置-->
-    <!--<import resource="classpath:spring/applicationContext-dataSource.xml"/>-->
+    <!--数据源配置-->
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://localhost:3306/db_test"/>
+        <property name="username" value="root"/>
+        <property name="password" value="123"/>
+
+        <property name="initialSize" value="10"/>
+        <property name="maxActive" value="50"/>
+        <property name="maxIdle" value="20"/>
+        <property name="minIdle" value="10"/>
+        <property name="removeAbandoned" value="true"/>
+        <property name="removeAbandonedTimeout" value="180"/>
+
+    </bean>
 
     <!--导入jpa配置-->
     <import resource="classpath:spring/applicationContext-jpa.xml"/>
+
+    <!-- 导入shiro配置 -->
+    <import resource="classpath:spring/applicationContext-shiro.xml"/>
 
 </beans>

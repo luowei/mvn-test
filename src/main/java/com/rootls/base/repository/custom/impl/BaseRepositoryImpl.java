@@ -9,7 +9,6 @@ import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
-import javax.annotation.Resource;
 import javax.persistence.Entity;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -22,7 +21,7 @@ import javax.sql.DataSource;
  * Time: 上午9:47
  * To change this template use File | Settings | File Templates.
  */
-@Resource
+//@Resource
 @Transactional
 public class BaseRepositoryImpl<T extends IdEntity> extends JdbcDaoSupport implements BaseRepository<T> {
 
@@ -35,7 +34,7 @@ public class BaseRepositoryImpl<T extends IdEntity> extends JdbcDaoSupport imple
     }
 
     //注入JPA EntityManager
-    @PersistenceContext(unitName = "jpa.trade")
+    @PersistenceContext(unitName = "com.rootls")
     EntityManager em;
 
     public void setEntityManager(EntityManager em) {

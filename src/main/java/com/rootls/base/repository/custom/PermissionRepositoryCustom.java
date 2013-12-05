@@ -9,5 +9,6 @@ import com.rootls.base.model.Permission;
  * Time: 上午10:32
  * To change this template use File | Settings | File Templates.
  */
+//@NoRepositoryBean
 public interface PermissionRepositoryCustom extends BaseRepository<Permission> {
 }

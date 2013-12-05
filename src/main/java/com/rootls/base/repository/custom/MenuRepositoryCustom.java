@@ -1,7 +1,6 @@
 package com.rootls.base.repository.custom;
 
 import com.rootls.base.model.Menu;
-import org.springframework.data.repository.NoRepositoryBean;
 
 import java.util.List;
 
@@ -12,8 +11,8 @@ import java.util.List;
  * Time: 上午9:49
  * To change this template use File | Settings | File Templates.
  */
-@NoRepositoryBean
-public interface MenuRepositoryCustom extends BaseRepository<Menu>{
+//@NoRepositoryBean
+public interface MenuRepositoryCustom extends BaseRepository<Menu> {
 
     Menu getFirstSubMenu();
 

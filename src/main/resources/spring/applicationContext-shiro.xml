@@ -78,7 +78,7 @@
     </bean>
 
     <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
-        <property name="dataSource" value="dataSource"/>
+        <property name="dataSource" ref="dataSource"/>
     </bean>
     <bean id="passwordMatcher" class="org.apache.shiro.authc.credential.PasswordMatcher">
         <property name="passwordService" ref="passwordService" />

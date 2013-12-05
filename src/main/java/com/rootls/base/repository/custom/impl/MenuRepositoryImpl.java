@@ -2,8 +2,8 @@ package com.rootls.base.repository.custom.impl;
 
 import com.rootls.base.model.Menu;
 import com.rootls.base.repository.custom.MenuRepositoryCustom;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -13,11 +13,11 @@ import java.util.List;
  * Time: 上午9:53
  * To change this template use File | Settings | File Templates.
  */
-@Resource
-//@Transactional
-public class MenuRepositoryCustomImpl extends BaseRepositoryImpl<Menu> implements MenuRepositoryCustom {
+//@Resource
+@Transactional
+public class MenuRepositoryImpl extends BaseRepositoryImpl<Menu> implements MenuRepositoryCustom {
 
-    public MenuRepositoryCustomImpl() {
+    public MenuRepositoryImpl() {
         this.clazzz = Menu.class;
     }
 

@@ -13,9 +13,12 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "permission")
-public class Permission extends IdEntity implements Cloneable {
+//@AttributeOverride( name="id", column = @Column(name="id") )
+public class Permission extends IdEntity{
 
+    @Transient
     private boolean checked;
+    @Transient
     private boolean open;
 
     public Permission() {
@@ -32,10 +35,10 @@ public class Permission extends IdEntity implements Cloneable {
         this.permissionGroupId = permissionGroupId;
     }
 
-    private String permission;
-
     @javax.persistence.Column(name = "permission", nullable = false, insertable = true, updatable = true, length = 100, precision = 0)
     @Basic
+    private String permission;
+
     public String getPermission() {
         return permission;
     }
@@ -44,10 +47,10 @@ public class Permission extends IdEntity implements Cloneable {
         this.permission = permission;
     }
 
-    private String description;
-
     @javax.persistence.Column(name = "description", nullable = false, insertable = true, updatable = true, length = 50, precision = 0)
     @Basic
+    private String description;
+
     public String getDescription() {
         return description;
     }
@@ -56,10 +59,10 @@ public class Permission extends IdEntity implements Cloneable {
         this.description = description;
     }
 
-    private Integer permissionGroupId;
-
     @javax.persistence.Column(name = "permission_group_id", nullable = true, insertable = true, updatable = true, length = 10, precision = 0)
     @Basic
+    private Integer permissionGroupId;
+
     public Integer getPermissionGroupId() {
         return permissionGroupId;
     }
@@ -68,9 +71,9 @@ public class Permission extends IdEntity implements Cloneable {
         this.permissionGroupId = permissionGroupId;
     }
 
+    @ManyToMany(mappedBy = "permissions")
     private Set<Role> roles = new HashSet<Role>();
 
-    @ManyToMany(mappedBy = "permissions")
     public Set<Role> getRoles() {
         return roles;
     }

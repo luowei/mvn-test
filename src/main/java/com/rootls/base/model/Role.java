@@ -14,6 +14,7 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "role")
+//@AttributeOverride( name="id", column = @Column(name="id") )
 public class Role extends IdEntity {
 
     public Role() {
@@ -24,10 +25,10 @@ public class Role extends IdEntity {
         this.name = name;
     }
 
-    private String name;
-
     @javax.persistence.Column(name = "role_name", nullable = false, insertable = true, updatable = true, length = 30, precision = 0)
     @Basic
+    private String name;
+
     public String getName() {
         return name;
     }
@@ -36,10 +37,10 @@ public class Role extends IdEntity {
         this.name = name;
     }
 
-    private String description;
-
     @javax.persistence.Column(name = "role_description", nullable = true, insertable = true, updatable = true, length = 100, precision = 0)
     @Basic
+    private String description;
+
     public String getDescription() {
         return description;
     }
@@ -48,10 +49,10 @@ public class Role extends IdEntity {
         this.description = description;
     }
 
-    private Date createTime;
-
     @javax.persistence.Column(name = "create_time", nullable = false, insertable = true, updatable = true, length = 19, precision = 0)
     @Basic
+    private Date createTime;
+
     public Date getCreateTime() {
         return createTime;
     }
@@ -61,10 +62,9 @@ public class Role extends IdEntity {
     }
 
 
-
+    @ManyToMany(mappedBy = "roles")
     private Set<User> users = new HashSet<User>();
 
-    @ManyToMany(mappedBy = "roles")
     public Set<User> getUsers() {
         return users;
     }
@@ -73,12 +73,12 @@ public class Role extends IdEntity {
         this.users = users;
     }
 
-    private Set<Permission> permissions = new HashSet<Permission>();
-
     @ManyToMany
     @JoinTable(name = "roles_permission",
             joinColumns = @JoinColumn(name = "role_id"),
             inverseJoinColumns = @JoinColumn(name = "permission_id",referencedColumnName = "id"))
+    private Set<Permission> permissions = new HashSet<Permission>();
+
     public Set<Permission> getPermissions() {
         return permissions;
     }

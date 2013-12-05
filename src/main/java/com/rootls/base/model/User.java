@@ -13,6 +13,7 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "user")
+//@AttributeOverride( name="id", column = @Column(name="id") )
 public class User extends IdEntity{
 
     public User() {
@@ -24,10 +25,10 @@ public class User extends IdEntity{
         this.password = password;
     }
 
-    private String name;
-
     @javax.persistence.Column(name = "username", nullable = false, insertable = true, updatable = true, length = 100, precision = 0)
     @Basic
+    private String name;
+
     public String getName() {
         return name;
     }
@@ -36,10 +37,10 @@ public class User extends IdEntity{
         this.name = name;
     }
 
-    private String password;
-
     @javax.persistence.Column(name = "password", nullable = false, insertable = true, updatable = true, length = 92, precision = 0)
     @Basic
+    private String password;
+
     public String getPassword() {
         return password;
     }
@@ -48,10 +49,10 @@ public class User extends IdEntity{
         this.password = password;
     }
 
-    private String email;
-
     @javax.persistence.Column(name = "email", nullable = true, insertable = true, updatable = true, length = 50, precision = 0)
     @Basic
+    private String email;
+
     public String getEmail() {
         return email;
     }
@@ -60,12 +61,12 @@ public class User extends IdEntity{
         this.email = email;
     }
 
-    private Set<Role> roles = new HashSet<Role>();
-
     @ManyToMany
     @JoinTable(name = "user_role",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
+    private Set<Role> roles = new HashSet<Role>();
+
     public Set<Role> getRoles() {
         return roles;
     }

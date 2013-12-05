@@ -10,7 +10,8 @@ import com.rootls.base.model.User;
  * Time: 上午11:17
  * To change this template use File | Settings | File Templates.
  */
-public interface UserRepositoryCustom  extends BaseRepository<User>{
+//@NoRepositoryBean
+public interface UserRepositoryCustom  extends BaseRepository<User> {
 
     void deleteUserRole(Integer userId, Integer roleId);
 
