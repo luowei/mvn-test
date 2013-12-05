@@ -31,7 +31,7 @@ import java.util.Set;
  */
 public class SaltAwareJdbcRealm extends AuthorizingRealm {
 
-    protected static final String DEFAULT_AUTHENTICATION_QUERY = "select id, password from users where username = ?";
+    protected static final String DEFAULT_AUTHENTICATION_QUERY = "select id,username,password from user where username = ?";
     protected static final String DEFAULT_USER_ROLES_QUERY = "select r.id, r.role_name from role r " +
             "left join user_role ur on r.id=ur.role_id where ur.user_id=?";
     protected static final String DEFAULT_PERMISSIONS_QUERY = "select p.id,p.permission,p.permission_group_id from permission p " +

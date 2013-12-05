@@ -35,7 +35,7 @@
             $("#batchDeleteButton").click(function () {
                 if ($("input[name=ids]:checked").size() > 0) {
                     if (del()) {
-                        $("#form1").attr("action", "/ttpod-shiro/classes/batchDelete").submit();
+                        $("#form1").attr("action", "/mvn-test/classes/batchDelete").submit();
                     }
                 } else {
                     alert("请选择要删除的菜单");
@@ -46,7 +46,7 @@
 </head>
 <body>
 
-<form id="menuCommand" class="well form-inline" action="/ttpod-shiro/manage/menu/list" method="post">
+<form id="menuCommand" class="well form-inline" action="/mvn-test/manage/menu/list" method="post">
     <input id="searchKey1" name="searchKey1" class="input-medium search-query" placeholder="菜单名称" type="text" value=""/>
     <input id="startTime" name="startTime" class="input-medium search-query" placeholder="开始时间" type="text" value=""/>
 
@@ -58,7 +58,7 @@
 
 
 
-<form id="form1" action="/ttpod-shiro/manage/menu/list" method="post">
+<form id="form1" action="/mvn-test/manage/menu/list" method="post">
 <table class="table table-bordered table-striped table-condensed">
 <thead>
 <tr>
@@ -81,10 +81,10 @@
     <td>1</td>
     <td>2012-03-04 00:00:00.0</td>
     <td>
-        <a href="/ttpod-shiro/manage/menu/edit/1" class="btn btn-info">修改</a>
+        <a href="/mvn-test/manage/menu/edit/1" class="btn btn-info">修改</a>
     </td>
     <td>
-        <a href="/ttpod-shiro/manage/menu/delete/1" class="btn btn-danger" onclick="return del();">
+        <a href="/mvn-test/manage/menu/delete/1" class="btn btn-danger" onclick="return del();">
             <i class="icon-trash icon-white"></i>删除
         </a>
     </td>
@@ -98,10 +98,10 @@
     <td>1.1</td>
     <td>2012-03-04 00:00:00.0</td>
     <td>
-        <a href="/ttpod-shiro/manage/menu/edit/2" class="btn btn-info">修改</a>
+        <a href="/mvn-test/manage/menu/edit/2" class="btn btn-info">修改</a>
     </td>
     <td>
-        <a href="/ttpod-shiro/manage/menu/delete/2" class="btn btn-danger" onclick="return del();">
+        <a href="/mvn-test/manage/menu/delete/2" class="btn btn-danger" onclick="return del();">
             <i class="icon-trash icon-white"></i>删除
         </a>
     </td>
@@ -115,10 +115,10 @@
     <td>1.2</td>
     <td>2012-03-04 00:00:00.0</td>
     <td>
-        <a href="/ttpod-shiro/manage/menu/edit/3" class="btn btn-info">修改</a>
+        <a href="/mvn-test/manage/menu/edit/3" class="btn btn-info">修改</a>
     </td>
     <td>
-        <a href="/ttpod-shiro/manage/menu/delete/3" class="btn btn-danger" onclick="return del();">
+        <a href="/mvn-test/manage/menu/delete/3" class="btn btn-danger" onclick="return del();">
             <i class="icon-trash icon-white"></i>删除
         </a>
     </td>
@@ -132,10 +132,10 @@
     <td>1.4</td>
     <td>2012-03-04 00:00:00.0</td>
     <td>
-        <a href="/ttpod-shiro/manage/menu/edit/4" class="btn btn-info">修改</a>
+        <a href="/mvn-test/manage/menu/edit/4" class="btn btn-info">修改</a>
     </td>
     <td>
-        <a href="/ttpod-shiro/manage/menu/delete/4" class="btn btn-danger" onclick="return del();">
+        <a href="/mvn-test/manage/menu/delete/4" class="btn btn-danger" onclick="return del();">
             <i class="icon-trash icon-white"></i>删除
         </a>
     </td>
@@ -149,10 +149,10 @@
     <td>1.5</td>
     <td>2012-03-04 00:00:00.0</td>
     <td>
-        <a href="/ttpod-shiro/manage/menu/edit/5" class="btn btn-info">修改</a>
+        <a href="/mvn-test/manage/menu/edit/5" class="btn btn-info">修改</a>
     </td>
     <td>
-        <a href="/ttpod-shiro/manage/menu/delete/5" class="btn btn-danger" onclick="return del();">
+        <a href="/mvn-test/manage/menu/delete/5" class="btn btn-danger" onclick="return del();">
             <i class="icon-trash icon-white"></i>删除
         </a>
     </td>
@@ -166,10 +166,10 @@
     <td>2</td>
     <td>2012-03-05 00:00:00.0</td>
     <td>
-        <a href="/ttpod-shiro/manage/menu/edit/6" class="btn btn-info">修改</a>
+        <a href="/mvn-test/manage/menu/edit/6" class="btn btn-info">修改</a>
     </td>
     <td>
-        <a href="/ttpod-shiro/manage/menu/delete/6" class="btn btn-danger" onclick="return del();">
+        <a href="/mvn-test/manage/menu/delete/6" class="btn btn-danger" onclick="return del();">
             <i class="icon-trash icon-white"></i>删除
         </a>
     </td>
@@ -183,10 +183,10 @@
     <td>3</td>
     <td>2012-03-05 00:00:00.0</td>
     <td>
-        <a href="/ttpod-shiro/manage/menu/edit/7" class="btn btn-info">修改</a>
+        <a href="/mvn-test/manage/menu/edit/7" class="btn btn-info">修改</a>
     </td>
     <td>
-        <a href="/ttpod-shiro/manage/menu/delete/7" class="btn btn-danger" onclick="return del();">
+        <a href="/mvn-test/manage/menu/delete/7" class="btn btn-danger" onclick="return del();">
             <i class="icon-trash icon-white"></i>删除
         </a>
     </td>
@@ -200,10 +200,10 @@
     <td>4</td>
     <td>2012-03-05 00:00:00.0</td>
     <td>
-        <a href="/ttpod-shiro/manage/menu/edit/8" class="btn btn-info">修改</a>
+        <a href="/mvn-test/manage/menu/edit/8" class="btn btn-info">修改</a>
     </td>
     <td>
-        <a href="/ttpod-shiro/manage/menu/delete/8" class="btn btn-danger" onclick="return del();">
+        <a href="/mvn-test/manage/menu/delete/8" class="btn btn-danger" onclick="return del();">
             <i class="icon-trash icon-white"></i>删除
         </a>
     </td>
@@ -217,10 +217,10 @@
     <td>5</td>
     <td>2012-03-05 00:00:00.0</td>
     <td>
-        <a href="/ttpod-shiro/manage/menu/edit/9" class="btn btn-info">修改</a>
+        <a href="/mvn-test/manage/menu/edit/9" class="btn btn-info">修改</a>
     </td>
     <td>
-        <a href="/ttpod-shiro/manage/menu/delete/9" class="btn btn-danger" onclick="return del();">
+        <a href="/mvn-test/manage/menu/delete/9" class="btn btn-danger" onclick="return del();">
             <i class="icon-trash icon-white"></i>删除
         </a>
     </td>
@@ -234,10 +234,10 @@
     <td>6</td>
     <td>2012-03-05 00:00:00.0</td>
     <td>
-        <a href="/ttpod-shiro/manage/menu/edit/10" class="btn btn-info">修改</a>
+        <a href="/mvn-test/manage/menu/edit/10" class="btn btn-info">修改</a>
     </td>
     <td>
-        <a href="/ttpod-shiro/manage/menu/delete/10" class="btn btn-danger" onclick="return del();">
+        <a href="/mvn-test/manage/menu/delete/10" class="btn btn-danger" onclick="return del();">
             <i class="icon-trash icon-white"></i>删除
         </a>
     </td>
@@ -269,8 +269,8 @@
 
 <div class="pageNav">
     <span class="plain">1</span>
-    <span class="highlight"><a href="/ttpod-shiro/manage/menu/list?page=2">2</a></span>
-    <a href="/ttpod-shiro/manage/menu/list?page=2" class="button">下一页</a>
+    <span class="highlight"><a href="/mvn-test/manage/menu/list?page=2">2</a></span>
+    <a href="/mvn-test/manage/menu/list?page=2" class="button">下一页</a>
     <br />当前第 1 页，共 12 条记录，每页显示 10 条，共 2 页
 </div>
 </form>

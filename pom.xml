@@ -7,6 +7,7 @@
     <groupId>mvn-test</groupId>
     <artifactId>mvn-test</artifactId>
     <version>1.0</version>
+    <packaging>war</packaging>
 
 
     <properties>
@@ -48,10 +49,10 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <!--cargo configuration-->
-        <servlet.port>8880</servlet.port>
-        <hostname>192.168.1.54</hostname>
-        <username>ttpod</username>
-        <password>ttpod</password>
+        <servlet.port>8080</servlet.port>
+        <hostname>127.0.0.1</hostname>
+        <username>admin</username>
+        <password>admin</password>
     </properties>
 
     <dependencies>

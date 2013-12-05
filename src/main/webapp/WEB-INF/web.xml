@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns="http://java.sun.com/xml/ns/javaee"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+         http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
          version="2.5">
 
-    <display-name>ttpod-shiro</display-name>
+    <display-name>mvn-test</display-name>
 
     <!-- load spring configuration -->
     <context-param>
@@ -31,11 +32,6 @@
         </init-param>
     </filter>
 
-    <filter>
-        <filter-name>openSessionInView</filter-name>
-        <filter-class>org.springframework.orm.hibernate4.support.OpenSessionInViewFilter</filter-class>
-    </filter>
-
     <!-- The filter-name matches name of a 'shiroFilter' bean inside applicationContext.xml -->
     <filter>
         <filter-name>shiroFilter</filter-name>
@@ -54,11 +50,6 @@
 
     <filter-mapping>
         <filter-name>characterEncoding</filter-name>
-        <url-pattern>/*</url-pattern>
-    </filter-mapping>
-
-    <filter-mapping>
-        <filter-name>openSessionInView</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
 
@@ -92,8 +83,8 @@
         </init-param>
         <load-on-startup>1</load-on-startup>
     </servlet>
-    
-    
+
+
     <servlet>
         <servlet-name>testServlet</servlet-name>
         <servlet-class>com.rootls.base.view.TestServlet</servlet-class>
@@ -104,7 +95,7 @@
         <servlet-name>mvc</servlet-name>
         <url-pattern>/</url-pattern>
     </servlet-mapping>
-    
+
     <servlet-mapping>
         <servlet-name>testServlet</servlet-name>
         <url-pattern>/test</url-pattern>
