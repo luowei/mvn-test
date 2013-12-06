@@ -141,7 +141,7 @@ public class SaltAwareJdbcRealm extends AuthorizingRealm {
         );
 
 
-        AuthorizationInfo authorizationInfo = null;
+        SimpleAuthorizationInfo authorizationInfo = null;
 
         //查找权限
         if (permissionsLookupEnabled && !roleSet.isEmpty()) {
@@ -176,7 +176,8 @@ public class SaltAwareJdbcRealm extends AuthorizingRealm {
                         }
                 );
             }
-            authorizationInfo = new SimpleAuthorizationInfo(permissionNames);
+            authorizationInfo = new SimpleAuthorizationInfo(roleNames);
+            authorizationInfo.setStringPermissions(permissionNames);
         }
         return authorizationInfo;
     }
