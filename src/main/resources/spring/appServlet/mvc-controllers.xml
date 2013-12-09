@@ -12,5 +12,7 @@
     <mvc:view-controller path="/unauthorize" />
     <mvc:view-controller path="/" view-name="home" />
     <mvc:view-controller path="/pwdGen"/>
+    <!--<mvc:view-controller path="/logout" view-name="home" />-->
+
 
 </beans>

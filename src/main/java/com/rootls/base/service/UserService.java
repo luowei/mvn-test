@@ -19,7 +19,7 @@ public interface UserService {
 
     long count();
 
-    Page<User> getDataTableByCriteriaQuery(PageRequest pageRequest, List<UrlBuilder.PropertyFilter> pfList);
+    Page<User> getPageByCriteriaQuery(PageRequest pageRequest, List<UrlBuilder.PropertyFilter> pfList);
 
     User findById(Integer id);
 

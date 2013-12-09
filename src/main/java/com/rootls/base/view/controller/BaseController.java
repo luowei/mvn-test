@@ -154,7 +154,7 @@ public class BaseController {
         dataTable.setConditionUrl(request.getContextPath() + conditionAndOrdersUrl);
 
         model.addAttribute("dataTable", dataTable);
-        model.addAttribute("order", conditionAndOrdersUrl);
+        model.addAttribute("order", orders);
         model.addAttribute("index", pageRequest.getOffset());
 
 

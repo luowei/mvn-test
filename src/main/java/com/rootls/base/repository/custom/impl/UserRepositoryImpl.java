@@ -23,6 +23,5 @@ public class UserRepositoryImpl extends BaseRepositoryImpl<User> implements User
     @Override
     public void saveUserRole(User user, Role role) {
 
-
     }
 }

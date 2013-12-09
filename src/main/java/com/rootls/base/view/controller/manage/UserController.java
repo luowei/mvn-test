@@ -8,7 +8,6 @@ import com.rootls.base.util.UrlBuilder;
 import com.rootls.base.view.command.UserCommand;
 import com.rootls.base.view.controller.BaseController;
 import com.rootls.base.view.groups.BatchDeleteGroup;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -101,7 +100,7 @@ public class UserController extends BaseController {
             searchConditionList.add(new PropertyFilter("startTime", startTime == null ? null : new DateTime(startTime).toString("yyyy-MM-dd")));
         }
 
-        Page<User> resultPage = userService.getDataTableByCriteriaQuery(pageRequest, pfList);
+        Page<User> resultPage = userService.getPageByCriteriaQuery(pageRequest, pfList);
 
         addPageInfo(model, request, response, orders, page, pageRequest, resultPage, searchConditionList, "/manage/user/list");
 

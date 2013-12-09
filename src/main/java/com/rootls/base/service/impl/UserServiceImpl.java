@@ -44,7 +44,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Page<User> getDataTableByCriteriaQuery(PageRequest pageRequest, List<UrlBuilder.PropertyFilter> pfList) {
+    public Page<User> getPageByCriteriaQuery(PageRequest pageRequest, List<UrlBuilder.PropertyFilter> pfList) {
         Specification<User> spec = DynamicSpecifications.<User>byPropertyFilter(pfList, User.class);
         return userRepository.findAll(spec, pageRequest);
     }

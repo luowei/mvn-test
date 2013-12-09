@@ -43,7 +43,7 @@ public class PermissionServiceImpl implements PermissionService {
     RoleRepository roleRepository;
 
     @Override
-    public Page<Permission> getDataTableByCriteriaQuery(PageRequest pageRequest, List<UrlBuilder.PropertyFilter> pfList) {
+     public Page<Permission> getDataTableByCriteriaQuery(PageRequest pageRequest, List<UrlBuilder.PropertyFilter> pfList) {
         Specification<Permission> spec = DynamicSpecifications.<Permission>byPropertyFilter(pfList, Permission.class);
         return permissionRepository.findAll(spec, pageRequest);
     }
@@ -107,7 +107,7 @@ public class PermissionServiceImpl implements PermissionService {
         ObjectMapper om = new ObjectMapper();
         String result = null;
         try {
-            result = om.writeValueAsString(om);
+            result = om.writeValueAsString(list);
         } catch (IOException e) {
             logger.error(e.getMessage(),e);
         }
