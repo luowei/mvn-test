@@ -8,7 +8,6 @@ import com.rootls.base.util.UrlBuilder;
 import com.rootls.base.view.command.UserCommand;
 import com.rootls.base.view.controller.BaseController;
 import com.rootls.base.view.groups.BatchDeleteGroup;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -116,7 +115,7 @@ public class UserController extends BaseController {
      * @return
      */
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
-    @RequiresPermissions("user:update")
+//    @RequiresPermissions("user:update")
     public String edit(@PathVariable Integer id, Model model) {
 
         model.addAttribute("userCommand", userService.findById(id));
@@ -133,7 +132,7 @@ public class UserController extends BaseController {
      * @return
      */
     @RequestMapping("/update")
-    @RequiresPermissions("user:update")
+//    @RequiresPermissions("user:update")
     public String update(@Valid UserCommand userCommand,
                          BindingResult result,
                          RedirectAttributes redirectAttrs,
@@ -162,7 +161,7 @@ public class UserController extends BaseController {
      * @return
      */
     @RequestMapping("/delete/{id}")
-    @RequiresPermissions("user:delete")
+//    @RequiresPermissions("user:delete")
     public String delete(@PathVariable Integer id,
                          RedirectAttributes redirectAttrs,
                          @CookieValue(Constants.REDIRECT_URL) String redirectUrl) {
